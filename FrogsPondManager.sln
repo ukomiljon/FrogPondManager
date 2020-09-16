@@ -48,6 +48,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebClient", "WebClient\", "
 		SlnRelativePath = "WebClient\"
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{99B3EFF9-0E59-4A2C-ADA7-AE51BB27A542}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrogsPond.ModulesShared", "FrogsPond.ModulesShared\FrogsPond.ModulesShared.csproj", "{48CBD352-2D8B-4E6C-820B-184AC11385FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +90,10 @@ Global
 		{A27A6C9E-D401-4798-8170-DC1956CAAF12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A27A6C9E-D401-4798-8170-DC1956CAAF12}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{A27A6C9E-D401-4798-8170-DC1956CAAF12}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{48CBD352-2D8B-4E6C-820B-184AC11385FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48CBD352-2D8B-4E6C-820B-184AC11385FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48CBD352-2D8B-4E6C-820B-184AC11385FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48CBD352-2D8B-4E6C-820B-184AC11385FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +111,8 @@ Global
 		{E7833DE8-0BA8-41B5-BD75-10FEB5A364B3} = {885BDFF0-A569-4141-B4E9-CD33668E4B4F}
 		{3F122200-E1E9-452B-8415-A3A707AA639F} = {885BDFF0-A569-4141-B4E9-CD33668E4B4F}
 		{A27A6C9E-D401-4798-8170-DC1956CAAF12} = {CD8E5D66-413F-4874-93BE-7CA2B2AA35F2}
+		{99B3EFF9-0E59-4A2C-ADA7-AE51BB27A542} = {AF59186C-F9D9-4779-8E88-B0BD9F703150}
+		{48CBD352-2D8B-4E6C-820B-184AC11385FB} = {99B3EFF9-0E59-4A2C-ADA7-AE51BB27A542}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2A549F8-D538-4A2C-95C6-345C086577A5}

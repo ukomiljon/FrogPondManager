@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FrogsPond.Modules.FrogsContext.Controllers
 {
     [ApiController]
-    [Route("api/frogs")]
+    [Route("api/v1/frogs")]
     public class FrogsController : ControllerBase
     {
         [HttpGet]
