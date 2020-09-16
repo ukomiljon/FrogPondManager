@@ -1,0 +1,110 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{AF59186C-F9D9-4779-8E88-B0BD9F703150}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccountsContext", "AccountsContext", "{7E7F783F-7EC0-4652-92C7-2F0E39A3F8E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrogsContext", "FrogsContext", "{885BDFF0-A569-4141-B4E9-CD33668E4B4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{87BE0CCC-E6D2-4736-AAA2-764BD6B88851}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{CD8E5D66-413F-4874-93BE-7CA2B2AA35F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer", "WebServer\WebServer.csproj", "{907C370A-EC2C-4676-9317-1B5AFC835E68}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrogsPond.Modules.AccountsContext.Controllers", "FrogsPond.Modules.AccountsContext.Controllers\FrogsPond.Modules.AccountsContext.Controllers.csproj", "{97A08F81-5F5F-405D-8D88-2451A17D3AA5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrogsPond.Modules.AccountsContext.Data", "FrogsPond.Modules.AccountsContext.Data\FrogsPond.Modules.AccountsContext.Data.csproj", "{B2C17754-E132-4BC9-B80E-1396F9EB169A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrogsPond.Modules.AccountsContext.Domain", "FrogsPond.Modules.AccountsContext.Domain\FrogsPond.Modules.AccountsContext.Domain.csproj", "{12251F75-DEAA-405A-B914-094B77C46C91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrogsPond.Modules.FrogsContext.Controllers", "FrogsPond.Modules.FrogsContext.Controllers\FrogsPond.Modules.FrogsContext.Controllers.csproj", "{B105ABAB-5D7D-440C-B656-F9D7F5826192}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrogsPond.Modules.FrogsContext.Data", "FrogsPond.Modules.FrogsContext.Data\FrogsPond.Modules.FrogsContext.Data.csproj", "{E7833DE8-0BA8-41B5-BD75-10FEB5A364B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrogsPond.Modules.FrogsContext.Domain", "FrogsPond.Modules.FrogsContext.Domain\FrogsPond.Modules.FrogsContext.Domain.csproj", "{3F122200-E1E9-452B-8415-A3A707AA639F}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebClient", "WebClient\", "{A27A6C9E-D401-4798-8170-DC1956CAAF12}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_65438"
+		Debug.AspNetCompiler.PhysicalPath = "WebClient\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65438\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_65438"
+		Release.AspNetCompiler.PhysicalPath = "WebClient\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65438\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "65438"
+		SlnRelativePath = "WebClient\"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{907C370A-EC2C-4676-9317-1B5AFC835E68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{907C370A-EC2C-4676-9317-1B5AFC835E68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{907C370A-EC2C-4676-9317-1B5AFC835E68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{907C370A-EC2C-4676-9317-1B5AFC835E68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97A08F81-5F5F-405D-8D88-2451A17D3AA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97A08F81-5F5F-405D-8D88-2451A17D3AA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97A08F81-5F5F-405D-8D88-2451A17D3AA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97A08F81-5F5F-405D-8D88-2451A17D3AA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C17754-E132-4BC9-B80E-1396F9EB169A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C17754-E132-4BC9-B80E-1396F9EB169A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C17754-E132-4BC9-B80E-1396F9EB169A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C17754-E132-4BC9-B80E-1396F9EB169A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12251F75-DEAA-405A-B914-094B77C46C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12251F75-DEAA-405A-B914-094B77C46C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12251F75-DEAA-405A-B914-094B77C46C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12251F75-DEAA-405A-B914-094B77C46C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B105ABAB-5D7D-440C-B656-F9D7F5826192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B105ABAB-5D7D-440C-B656-F9D7F5826192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B105ABAB-5D7D-440C-B656-F9D7F5826192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B105ABAB-5D7D-440C-B656-F9D7F5826192}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7833DE8-0BA8-41B5-BD75-10FEB5A364B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7833DE8-0BA8-41B5-BD75-10FEB5A364B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7833DE8-0BA8-41B5-BD75-10FEB5A364B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7833DE8-0BA8-41B5-BD75-10FEB5A364B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F122200-E1E9-452B-8415-A3A707AA639F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F122200-E1E9-452B-8415-A3A707AA639F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F122200-E1E9-452B-8415-A3A707AA639F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F122200-E1E9-452B-8415-A3A707AA639F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A27A6C9E-D401-4798-8170-DC1956CAAF12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A27A6C9E-D401-4798-8170-DC1956CAAF12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A27A6C9E-D401-4798-8170-DC1956CAAF12}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{A27A6C9E-D401-4798-8170-DC1956CAAF12}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF59186C-F9D9-4779-8E88-B0BD9F703150} = {87BE0CCC-E6D2-4736-AAA2-764BD6B88851}
+		{7E7F783F-7EC0-4652-92C7-2F0E39A3F8E1} = {AF59186C-F9D9-4779-8E88-B0BD9F703150}
+		{885BDFF0-A569-4141-B4E9-CD33668E4B4F} = {AF59186C-F9D9-4779-8E88-B0BD9F703150}
+		{CD8E5D66-413F-4874-93BE-7CA2B2AA35F2} = {87BE0CCC-E6D2-4736-AAA2-764BD6B88851}
+		{907C370A-EC2C-4676-9317-1B5AFC835E68} = {CD8E5D66-413F-4874-93BE-7CA2B2AA35F2}
+		{97A08F81-5F5F-405D-8D88-2451A17D3AA5} = {7E7F783F-7EC0-4652-92C7-2F0E39A3F8E1}
+		{B2C17754-E132-4BC9-B80E-1396F9EB169A} = {7E7F783F-7EC0-4652-92C7-2F0E39A3F8E1}
+		{12251F75-DEAA-405A-B914-094B77C46C91} = {7E7F783F-7EC0-4652-92C7-2F0E39A3F8E1}
+		{B105ABAB-5D7D-440C-B656-F9D7F5826192} = {885BDFF0-A569-4141-B4E9-CD33668E4B4F}
+		{E7833DE8-0BA8-41B5-BD75-10FEB5A364B3} = {885BDFF0-A569-4141-B4E9-CD33668E4B4F}
+		{3F122200-E1E9-452B-8415-A3A707AA639F} = {885BDFF0-A569-4141-B4E9-CD33668E4B4F}
+		{A27A6C9E-D401-4798-8170-DC1956CAAF12} = {CD8E5D66-413F-4874-93BE-7CA2B2AA35F2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2A549F8-D538-4A2C-95C6-345C086577A5}
+	EndGlobalSection
+EndGlobal
