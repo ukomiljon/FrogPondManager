@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FrogsPond.Modules.AccountsContext.Controllers\FrogsPond.Modules.AccountsContext.Controllers.csproj" />
+    <ProjectReference Include="..\FrogsPond.Modules.AccountsContext.Data\FrogsPond.Modules.AccountsContext.Data.csproj" />
     <ProjectReference Include="..\FrogsPond.Modules.FrogsContext.Controllers\FrogsPond.Modules.FrogsContext.Controllers.csproj" />
   </ItemGroup>
 

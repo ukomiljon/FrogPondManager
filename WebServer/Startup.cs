@@ -13,7 +13,9 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using System.Reflection;
 using FrogsPond.Modules.AccountsContext.Domain.Services;
 using AutoMapper;
- 
+using FrogsPond.Modules.AccountsContext.Domain;
+using FrogsPond.Modules.AccountsContext.Data;
+using FrogsPond.Modules.AccountsContext.Controllers;
 
 namespace WebServer
 {
@@ -35,13 +37,33 @@ namespace WebServer
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen();
 
+            services.AddControllers()
+           .AddControllersAsServices();
+
             // configure strongly typed settings object
             //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            // configure DI for application services
-            services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IEmailService, EmailService>();
-            services.AddControllers();
+            // configure DI for application services  
+            //services.AddScoped<AccountsController>();
+            services.AddSingleton<IAccountService, AccountService>();
+            services.AddSingleton<IEmailService, EmailService>();
+            services.AddSingleton<IAccountRepository, MongoDbRepository>();
+
+            //services.AddSingleton<EmailService>(provider =>
+            //{
+            //    return new EmailService(null);
+            //});
+
+            //services.AddSingleton<AccountService>(provider =>
+            //{                 
+            //    return new AccountService(null, null, null);
+            //});
+
+            //services.AddSingleton<AccountsController>(provider =>
+            //{ 
+            //    return new AccountsController(null, null);
+            //});
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
