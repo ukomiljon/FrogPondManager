@@ -1,23 +1,23 @@
 ﻿using System;
-using FrogsPond.Modules.AccountsContext;
+using System.Collections.Generic;
+using AutoMapper;
+using FrogsPond.Modules.AccountsContext.Domain.Entities;
+using FrogsPond.Modules.AccountsContext.Domain.Models;
+using FrogsPond.Modules.AccountsContext.Domain.Services;
+using FrogsPond.Modules.AccountsContext.Domain.UseCases;
+using FrogsPond.Modules.AccountsContext.Domain.UseCases.DTO;
+ 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrogsPond.Modules.AccountsContext.Controllers
 {
     [ApiController]
-    [Route("api/v1/accounts")]
-    //public class AccountsController : ControllerBase
-    //{
-    //    public string Get()
-    //    {
-    //        return "hello from accounts " + new Random().Next(100); ;
-    //    }
-    //}
+    [Route("api/v1/accounts")] 
 
-    public class AccountsController : ControllerBase
+    public class AccountsController : BaseController
     {
-        private readonly FrogsPond.Modules.AccountsContext....AccountsContext..Domain.Services. IAccountService _accountService;
+        private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
 
         public AccountsController(
@@ -28,19 +28,25 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("authenticate")]
-        public ActionResult<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+
+        public string Get()
         {
-            var response = _accountService.Authenticate(model, ipAddress());
+            return "hello from accounts " + new Random().Next(100); ;
+        }
+         
+        [HttpPost("authenticate")]
+        public ActionResult<AuthenticateResponse> Authenticate(AuthenticateRequest model, string secret)
+        {
+            var response = _accountService.Authenticate(model, ipAddress(), secret);
             setTokenCookie(response.RefreshToken);
             return Ok(response);
         }
 
         [HttpPost("refresh-token")]
-        public ActionResult<AuthenticateResponse> RefreshToken()
+        public ActionResult<AuthenticateResponse> RefreshToken(string secret)
         {
             var refreshToken = Request.Cookies["refreshToken"];
-            var response = _accountService.RefreshToken(refreshToken, ipAddress());
+            var response = _accountService.RefreshToken(refreshToken, ipAddress(), secret);
             setTokenCookie(response.RefreshToken);
             return Ok(response);
         }

@@ -4,7 +4,6 @@ using FrogsPond.Modules.AccountsContext.Domain.Services;
 using FrogsPond.Modules.AccountsContext.Domain.UseCases.DTO;
 using AutoMapper;
 using BC = BCrypt.Net.BCrypt;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -13,8 +12,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text; 
-using FrogsPond.ModulesShared;
-using FrogsPond.Modules.AccountsContext;
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Services
 {
@@ -22,31 +19,28 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository _accountRepository;
-        private readonly IMapper _mapper;
-        private readonly AppSettings _appSettings;
+        private readonly IMapper _mapper; 
         private readonly IEmailService _emailService;
 
         public AccountService(
             IAccountRepository accountRepository,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings,
+            IMapper mapper, 
             IEmailService emailService)
         {
             _accountRepository = accountRepository;
-            _mapper = mapper;
-            _appSettings = appSettings.Value;
+            _mapper = mapper; 
             _emailService = emailService;
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
+        public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress,string secret)
         {
             var account = _accountRepository.FindByEmail(model.Email);
 
             if (account == null || !account.IsVerified || !BC.Verify(model.Password, account.PasswordHash))
-                throw new AppException("Email or password is incorrect");
+                throw new Exception("Email or password is incorrect");
 
             // authentication successful so generate jwt and refresh tokens
-            var jwtToken = generateJwtToken(account);
+            var jwtToken = generateJwtToken(account, secret);
             var refreshToken = generateRefreshToken(ipAddress);
 
             // save refresh token
@@ -60,7 +54,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             return response;
         }
 
-        public AuthenticateResponse RefreshToken(string token, string ipAddress)
+        public AuthenticateResponse RefreshToken(string token, string ipAddress, string secret)
         {
             var (refreshToken, account) = getRefreshToken(token);
 
@@ -74,7 +68,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             _accountRepository.SaveChanges();
 
             // generate new jwt
-            var jwtToken = generateJwtToken(account);
+            var jwtToken = generateJwtToken(account, secret);
 
             var response = _mapper.Map<AuthenticateResponse>(account);
             response.JwtToken = jwtToken;
@@ -127,7 +121,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
         {
             var account = _accountRepository.FindByToken(token);
 
-            if (account == null) throw new AppException("Verification failed");
+            if (account == null) throw new Exception("Verification failed");
 
             account.Verified = DateTime.UtcNow;
             account.VerificationToken = null;
@@ -159,7 +153,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             var account = _accountRepository.SingleOrDefault(model.Token);
 
             if (account == null)
-                throw new AppException("Invalid token");
+                throw new Exception("Invalid token");
         }
 
         public void ResetPassword(ResetPasswordRequest model)
@@ -167,7 +161,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             var account = _accountRepository.SingleOrDefault(model.Token);
 
             if (account == null)
-                throw new AppException("Invalid token");
+                throw new Exception("Invalid token");
 
             // update password and remove reset token
             account.PasswordHash = BC.HashPassword(model.Password);
@@ -195,7 +189,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
         {
             // validate
             if (_accountRepository.FindByEmail(model.Email) != null)
-                throw new AppException($"Email '{model.Email}' is already registered");
+                throw new Exception($"Email '{model.Email}' is already registered");
 
             // map model to new account object
             var account = _mapper.Map<Account>(model);
@@ -218,7 +212,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
 
             // validate
             if (account.Email != model.Email && _accountRepository.FindByEmail(model.Email) != null)
-                throw new AppException($"Email '{model.Email}' is already taken");
+                throw new Exception($"Email '{model.Email}' is already taken");
 
             // hash password if it was entered
             if (!string.IsNullOrEmpty(model.Password))
@@ -252,16 +246,16 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
         private (RefreshToken, Account) getRefreshToken(string token)
         {
             var account = _accountRepository.SingleOrDefault(token);
-            if (account == null) throw new AppException("Invalid token");
+            if (account == null) throw new Exception("Invalid token");
             var refreshToken = account.RefreshTokens.Single(x => x.Token == token);
-            if (!refreshToken.IsActive) throw new AppException("Invalid token");
+            if (!refreshToken.IsActive) throw new Exception("Invalid token");
             return (refreshToken, account);
         }
 
-        private string generateJwtToken(Account account)
+        private string generateJwtToken(Account account, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] { new Claim("id", account.Id.ToString()) }),

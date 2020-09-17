@@ -9,14 +9,11 @@
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="MailKit" Version="2.9.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
     <PackageReference Include="MimeKit" Version="2.9.2" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\FrogsPond.ModulesShared\FrogsPond.ModulesShared.csproj" />
   </ItemGroup>
 
 </Project>
