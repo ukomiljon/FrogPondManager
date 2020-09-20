@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FrogsPond.Modules.AccountsContext.Domain\FrogsPond.Modules.AccountsContext.Domain.csproj" />
-    <ProjectReference Include="..\FrogsPond.Modules.FrogsContext.Domain\FrogsPond.Modules.FrogsContext.Domain.csproj" />
   </ItemGroup>
 
 </Project>

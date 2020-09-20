@@ -14,11 +14,11 @@ using System.Reflection;
 using FrogsPond.Modules.AccountsContext.Domain.Services;
 using AutoMapper;
 using FrogsPond.Modules.AccountsContext.Domain;
-using FrogsPond.Modules.AccountsContext.Data;
 using FrogsPond.Modules.AccountsContext.Controllers;
 
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using FrogsPond.Modules.AccountsContext.Data;
 
 namespace WebServer
 {
