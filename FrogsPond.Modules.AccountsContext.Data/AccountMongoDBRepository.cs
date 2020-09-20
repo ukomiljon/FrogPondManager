@@ -1,15 +1,24 @@
 ﻿using FrogsPond.Modules.AccountsContext.Domain;
 using FrogsPond.Modules.AccountsContext.Domain.Entities;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 
 namespace FrogsPond.Modules.AccountsContext.Data
 {
-    public class MongoDbRepository : IAccountRepository
+    public class AccountMongoDBRepository : IAccountRepository
     {
-        public MongoDbRepository()
-        {
+        private readonly IMongoCollection<Account> _accounts;
+        private readonly IMongoCollection<RefreshToken> _refreshTokens;
 
+        public AccountMongoDBRepository(IAccountDatabaseSettings settings)
+        {
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
+            _accounts = database.GetCollection<Account>(settings.AccountCollectionName);
+            _refreshTokens = database.GetCollection<RefreshToken>(settings.RefreshTokenCollectionName);
+            
         }
 
         public void Add(Account account)
@@ -45,7 +54,7 @@ namespace FrogsPond.Modules.AccountsContext.Data
 
         public IList<Account> GetAll()
         {
-            throw new NotImplementedException();
+            return _accounts.Find(emp => true).ToList();
         }
 
         public int GetCount()

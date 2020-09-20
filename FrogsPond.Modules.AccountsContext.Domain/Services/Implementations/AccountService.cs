@@ -23,9 +23,9 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
         private readonly IEmailService _emailService;
 
         public AccountService(
-            IAccountRepository accountRepository,
-            IMapper mapper, 
-            IEmailService emailService)
+            IAccountRepository accountRepository,              
+            IEmailService emailService,
+             IMapper mapper)
         {
             _accountRepository = accountRepository;
             _mapper = mapper; 

@@ -17,6 +17,9 @@ using FrogsPond.Modules.AccountsContext.Domain;
 using FrogsPond.Modules.AccountsContext.Data;
 using FrogsPond.Modules.AccountsContext.Controllers;
 
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+
 namespace WebServer
 {
     public class Startup
@@ -30,58 +33,55 @@ namespace WebServer
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            //services.AddDbContext<DataContext>();
+        {             
             services.AddCors();
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen();
 
-            services.AddControllers()
-           .AddControllersAsServices();
+            services.AddControllers();
+            
+            services.Configure<SmtpSettings>(
+               Configuration.GetSection(nameof(SmtpSettings)));
 
-            // configure strongly typed settings object
-            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddSingleton<ISmtpSettings>(sp =>
+                sp.GetRequiredService<IOptions<SmtpSettings>>().Value);
 
-            // configure DI for application services  
-            //services.AddScoped<AccountsController>();
-            services.AddSingleton<IAccountService, AccountService>();
-            services.AddSingleton<IEmailService, EmailService>();
-            services.AddSingleton<IAccountRepository, MongoDbRepository>();
+            services.Configure<AccountDatabaseSettings>(
+               Configuration.GetSection(nameof(AccountDatabaseSettings)));
 
-            //services.AddSingleton<EmailService>(provider =>
-            //{
-            //    return new EmailService(null);
-            //});
+            services.AddSingleton<IAccountDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<AccountDatabaseSettings>>().Value);
 
-            //services.AddSingleton<AccountService>(provider =>
-            //{                 
-            //    return new AccountService(null, null, null);
-            //});
-
-            //services.AddSingleton<AccountsController>(provider =>
-            //{ 
-            //    return new AccountsController(null, null);
-            //});
-
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IAccountRepository, AccountMongoDBRepository>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            // generated swagger json and swagger ui middleware
+            app.UseSwagger();
+            app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/api/v1/swagger.json", "FrogsPond API"));
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            // global cors policy
+            app.UseCors(x => x
+                .SetIsOriginAllowed(origin => true)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            // global error handler
+            //app.UseMiddleware<ErrorHandlerMiddleware>();
+
+            // custom jwt auth middleware
+            //app.UseMiddleware<JwtMiddleware>();
+
+            app.UseEndpoints(x => x.MapControllers());
         }
     }
 }

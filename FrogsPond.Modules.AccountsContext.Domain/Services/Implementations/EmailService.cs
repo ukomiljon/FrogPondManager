@@ -8,20 +8,13 @@ using MimeKit.Text;
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Services
 {
-    public class SmtpData
-    {        
-        public string EmailFrom { get; set; }
-        public string SmtpHost { get; set; }
-        public int SmtpPort { get; set; }
-        public string SmtpUser { get; set; }
-        public string SmtpPass { get; set; }
-    }
+   
 
     public class EmailService : IEmailService
     {
-        private readonly SmtpData _smtpData;
+        private readonly ISmtpSettings _smtpData;
 
-        public EmailService(SmtpData smtpData)
+        public EmailService(ISmtpSettings smtpData)
         {
             _smtpData = smtpData;
         }

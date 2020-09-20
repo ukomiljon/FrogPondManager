@@ -22,17 +22,18 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
 
         public AccountsController(
             IAccountService accountService,
-            IMapper mapper)
+            IMapper mapper
+            )
         {
             _accountService = accountService;
             _mapper = mapper;
         }
 
-
-        public string Get()
-        {
-            return "hello from accounts " + new Random().Next(100); ;
-        }
+        //[HttpGet]
+        //public string Get()
+        //{
+        //    return "hello from accounts " + new Random().Next(100); ;
+        //}
          
         [HttpPost("authenticate")]
         public ActionResult<AuthenticateResponse> Authenticate(AuthenticateRequest model, string secret)
