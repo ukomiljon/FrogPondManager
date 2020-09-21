@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FrogsPond.Modules.AccountsContext.Controllers
 {
-    [ApiController]
-    [Route("api/v1/accounts")] 
+    [ApiController] 
+    [Route("[controller]")]
 
     public class AccountsController : BaseController
     {

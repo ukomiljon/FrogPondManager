@@ -64,7 +64,7 @@ namespace WebServer
         {
             // generated swagger json and swagger ui middleware
             app.UseSwagger();
-            app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/api/v1/swagger.json", "FrogsPond API"));
+            app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "FrogsPond API"));
 
             app.UseRouting();
 
