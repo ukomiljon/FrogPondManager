@@ -11,7 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text; 
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Services
 {
@@ -19,22 +20,22 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository _accountRepository;
-        private readonly IMapper _mapper; 
+        private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
 
         public AccountService(
-            IAccountRepository accountRepository,              
+            IAccountRepository accountRepository,
             IEmailService emailService,
              IMapper mapper)
         {
             _accountRepository = accountRepository;
-            _mapper = mapper; 
+            _mapper = mapper;
             _emailService = emailService;
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress,string secret)
+        public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress, string secret)
         {
-            var account = _accountRepository.FindByEmail(model.Email);
+            var account = _accountRepository.FindByEmail(model.Email).Result;
 
             if (account == null || !account.IsVerified || !BC.Verify(model.Password, account.PasswordHash))
                 throw new Exception("Email or password is incorrect");
@@ -46,7 +47,6 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             // save refresh token
             account.RefreshTokens.Add(refreshToken);
             _accountRepository.Update(account);
-            _accountRepository.SaveChanges();
 
             var response = _mapper.Map<AuthenticateResponse>(account);
             response.JwtToken = jwtToken;
@@ -65,7 +65,6 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             refreshToken.ReplacedByToken = newRefreshToken.Token;
             account.RefreshTokens.Add(newRefreshToken);
             _accountRepository.Update(account);
-            _accountRepository.SaveChanges();
 
             // generate new jwt
             var jwtToken = generateJwtToken(account, secret);
@@ -84,7 +83,6 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             refreshToken.Revoked = DateTime.UtcNow;
             refreshToken.RevokedByIp = ipAddress;
             _accountRepository.Update(account);
-            _accountRepository.SaveChanges();
         }
 
         public void Register(RegisterRequest model, string origin)
@@ -101,7 +99,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             var account = _mapper.Map<Account>(model);
 
             // first registered account is an admin
-            var isFirstAccount = _accountRepository.GetCount() == 0;
+            var isFirstAccount = _accountRepository.GetCount().Result == 0;
             account.Role = isFirstAccount ? Role.Admin : Role.User;
             account.Created = DateTime.UtcNow;
             account.VerificationToken = randomTokenString();
@@ -111,7 +109,6 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
 
             // save account
             _accountRepository.Add(account);
-            _accountRepository.SaveChanges();
 
             // send email
             sendVerificationEmail(account, origin);
@@ -119,7 +116,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
 
         public void VerifyEmail(string token)
         {
-            var account = _accountRepository.FindByToken(token);
+            var account = _accountRepository.FindValidatedResetToken(token).Result;
 
             if (account == null) throw new Exception("Verification failed");
 
@@ -127,12 +124,11 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             account.VerificationToken = null;
 
             _accountRepository.Update(account);
-            _accountRepository.SaveChanges();
         }
 
         public void ForgotPassword(ForgotPasswordRequest model, string origin)
         {
-            var account = _accountRepository.FindByEmail(model.Email);
+            var account = _accountRepository.FindByEmail(model.Email).Result;
 
             // always return ok response to prevent email enumeration
             if (account == null) return;
@@ -142,7 +138,6 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             account.ResetTokenExpires = DateTime.UtcNow.AddDays(24);
 
             _accountRepository.Update(account);
-            _accountRepository.SaveChanges();
 
             // send email
             sendPasswordResetEmail(account, origin);
@@ -150,7 +145,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
 
         public void ValidateResetToken(ValidateResetTokenRequest model)
         {
-            var account = _accountRepository.SingleOrDefault(model.Token);
+            var account = _accountRepository.FindValidatedResetToken(model.Token);
 
             if (account == null)
                 throw new Exception("Invalid token");
@@ -158,7 +153,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
 
         public void ResetPassword(ResetPasswordRequest model)
         {
-            var account = _accountRepository.SingleOrDefault(model.Token);
+            var account = _accountRepository.FindValidatedResetToken(model.Token).Result;
 
             if (account == null)
                 throw new Exception("Invalid token");
@@ -170,7 +165,6 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             account.ResetTokenExpires = null;
 
             _accountRepository.Update(account);
-            _accountRepository.SaveChanges();
         }
 
         public IEnumerable<AccountResponse> GetAll()
@@ -179,7 +173,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             return _mapper.Map<IList<AccountResponse>>(accounts);
         }
 
-        public AccountResponse GetById(int id)
+        public AccountResponse GetById(string id)
         {
             var account = getAccount(id);
             return _mapper.Map<AccountResponse>(account);
@@ -201,12 +195,11 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
 
             // save account
             _accountRepository.Add(account);
-            _accountRepository.SaveChanges();
 
             return _mapper.Map<AccountResponse>(account);
         }
 
-        public AccountResponse Update(int id, UpdateRequest model)
+        public AccountResponse Update(string id, UpdateRequest model)
         {
             var account = getAccount(id);
 
@@ -222,30 +215,28 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             _mapper.Map(model, account);
             account.Updated = DateTime.UtcNow;
             _accountRepository.Update(account);
-            _accountRepository.SaveChanges();
 
             return _mapper.Map<AccountResponse>(account);
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             var account = getAccount(id);
             _accountRepository.Delete(account);
-            _accountRepository.SaveChanges();
         }
 
         // helper methods
 
-        private Account getAccount(int id)
+        private Account getAccount(string id)
         {
-            var account = _accountRepository.FindById(id);
+            var account = _accountRepository.FindById(id).Result;
             if (account == null) throw new KeyNotFoundException("Account not found");
             return account;
         }
 
         private (RefreshToken, Account) getRefreshToken(string token)
         {
-            var account = _accountRepository.SingleOrDefault(token);
+            var account = _accountRepository.FindOneFromRefreshTokens(token).Result;
             if (account == null) throw new Exception("Invalid token");
             var refreshToken = account.RefreshTokens.Single(x => x.Token == token);
             if (!refreshToken.IsActive) throw new Exception("Invalid token");

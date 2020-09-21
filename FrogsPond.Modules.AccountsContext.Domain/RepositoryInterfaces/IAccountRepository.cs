@@ -8,18 +8,18 @@ namespace FrogsPond.Modules.AccountsContext.Domain
 {
     public interface IAccountRepository
     {
-        IList<Account> GetAll();
-        Account FindById(int id);
-        Account FindByToken(string token);
-        Account FindByEmail(string email);
-        void Add(Account account);
-        void Update(Account account);
-        void Delete(Account account);
-        void DeleteById(int id);
-        void SaveChanges();
-        int GetCount();
+        Task<List<Account>> GetAll();
+        Task<Account> FindById(string id);
+        Task<Account> FindByVerificationToken(string token);
 
-        //  x.ResetTokenExpires > DateTime.UtcNow
-        Account SingleOrDefault(string token);
+        Task<Account> FindValidatedResetToken(string token);
+        Task<Account> FindOneFromRefreshTokens(string token);
+        Task<Account> FindByEmail(string email);
+        Task<Account> Add(Account account);
+        Task Update(Account account);
+        Task Delete(Account account);
+        Task DeleteById(string id);
+        Task<int> GetCount();
+        Task<Account> SingleOrDefault(string token);
     }
 }
