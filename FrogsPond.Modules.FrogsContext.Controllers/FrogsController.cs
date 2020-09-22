@@ -29,10 +29,12 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<FrogResponse>> GetAll()
         {
-            var accounts = _frogService.GetAll();
-            return Ok(accounts);
+            var frogs = _frogService.GetAll();
+            return Ok(frogs);
         }
 
+        [Authorize(Role.Admin)]
+        [AuthorizeUserAttribute]
         [HttpGet("{id}/{userId}")]
         public ActionResult<FrogResponse> GetById(string id, string userId)
         {
@@ -40,6 +42,8 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
             return Ok(frog);
         }
 
+        [Authorize(Role.Admin)]
+        [AuthorizeUserAttribute]
         [HttpGet("{userId}")]
         public ActionResult<IEnumerable<FrogResponse>> GetByUserId(string userId)
         {
@@ -47,6 +51,8 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
             return Ok(frogs);
         }
 
+        [Authorize(Role.Admin)]
+        [AuthorizeUserAttribute]
         [HttpPost]
         public ActionResult<FrogResponse> Create(FrogCreateRequest model)
         {
@@ -54,7 +60,8 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
             return Ok(frog);
         }
 
-        //[Authorize]
+        [Authorize(Role.Admin)]
+        [AuthorizeUserAttribute]
         [HttpPut("{id:int}")]
         public ActionResult<FrogResponse> Update(string id, FrogUpdateRequest model)
         {
@@ -62,7 +69,8 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
             return Ok(frog);
         }
 
-        //[Authorize]
+        [Authorize(Role.Admin)]
+        [AuthorizeUserAttribute]
         [HttpDelete("{id:int}")]
         public IActionResult Delete(string id)
         {

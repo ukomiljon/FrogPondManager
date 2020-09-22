@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FrogsPond.Modules.AccountsContext.Domain
+namespace FrogsPond.Modules.FrogsContext.Domain
 {
     public class AutoMapperProfile : Profile
     {        
