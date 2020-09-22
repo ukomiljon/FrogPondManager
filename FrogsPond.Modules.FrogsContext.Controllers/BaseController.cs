@@ -9,6 +9,6 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
     [Controller]
     public abstract class BaseController : ControllerBase
     {
-        public Frog Account => (Frog)HttpContext.Items["Frog"];
+        public Frog Frog => (Frog)HttpContext.Items["Frog"];
     }
 }
