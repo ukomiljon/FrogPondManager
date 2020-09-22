@@ -1,11 +1,15 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Entities
 {
     public class RefreshToken
-    {         
+    {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public int Id { get; set; }
         public Account Account { get; set; }
         public string Token { get; set; }

@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FrogsPond.Modules.FrogsContext.Domain\FrogsPond.Modules.FrogsContext.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -19,6 +19,11 @@ using FrogsPond.Modules.AccountsContext.Controllers;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using FrogsPond.Modules.AccountsContext.Data;
+using FrogsPond.Modules.FrogsContext.Domain.Settings;
+using FrogsPond.Modules.FrogsContext.Domain.Services;
+using FrogsPond.Modules.FrogsContext.Domain.Services.Implementations;
+using FrogsPond.Modules.FrogsContext.Domain.RepositoryInterfaces;
+using FrogsPond.Modules.FrogsContext.Data;
 
 namespace WebServer
 {
@@ -33,14 +38,14 @@ namespace WebServer
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {             
+        {
             services.AddCors();
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen();
 
             services.AddControllers();
-            
+
             services.Configure<SmtpSettings>(
                Configuration.GetSection(nameof(SmtpSettings)));
 
@@ -56,7 +61,16 @@ namespace WebServer
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAccountRepository, AccountMongoDBRepository>();
-            
+
+            services.Configure<FrogDatabaseSettings>(
+               Configuration.GetSection(nameof(FrogDatabaseSettings)));
+
+            services.AddSingleton<IFrogDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<FrogDatabaseSettings>>().Value);
+
+            services.AddScoped<IFrogService, FrogService>();
+            services.AddScoped<IFrogRepository, FrogMongoDBRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

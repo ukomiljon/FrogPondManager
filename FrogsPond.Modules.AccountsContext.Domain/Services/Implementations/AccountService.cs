@@ -88,7 +88,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
         public void Register(RegisterRequest model, string origin)
         {
             // validate
-            if (_accountRepository.FindByEmail(model.Email) != null)
+            if (_accountRepository.FindByEmail(model.Email).Result != null)
             {
                 // send already registered error in email to prevent account enumeration
                 sendAlreadyRegisteredEmail(model.Email, origin);
@@ -179,7 +179,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             return _mapper.Map<AccountResponse>(account);
         }
 
-        public AccountResponse Create(CreateRequest model)
+        public AccountResponse Create(AccountCreateRequest model)
         {
             // validate
             if (_accountRepository.FindByEmail(model.Email) != null)
@@ -199,7 +199,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             return _mapper.Map<AccountResponse>(account);
         }
 
-        public AccountResponse Update(string id, UpdateRequest model)
+        public AccountResponse Update(string id, AccountUpdateRequest model)
         {
             var account = getAccount(id);
 
@@ -282,7 +282,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             string message;
             if (!string.IsNullOrEmpty(origin))
             {
-                var verifyUrl = $"{origin}/account/verify-email?token={account.VerificationToken}";
+                var verifyUrl = $"{origin}/accounts/verify-email?token={account.VerificationToken}";
                 message = $@"<p>Please click the below link to verify your email address:</p>
                              <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
             }
@@ -323,7 +323,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             string message;
             if (!string.IsNullOrEmpty(origin))
             {
-                var resetUrl = $"{origin}/account/reset-password?token={account.ResetToken}";
+                var resetUrl = $"{origin}/accounts/reset-password?token={account.ResetToken}";
                 message = $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
                              <p><a href=""{resetUrl}"">{resetUrl}</a></p>";
             }

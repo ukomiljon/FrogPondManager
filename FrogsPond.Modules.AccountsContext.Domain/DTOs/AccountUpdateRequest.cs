@@ -2,7 +2,7 @@
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Models
 {
-    public class UpdateRequest
+    public class AccountUpdateRequest
     {
         private string _password;
         private string _confirmPassword;

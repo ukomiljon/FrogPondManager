@@ -77,8 +77,8 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
             return Ok(new { message = "Registration successful, please check your email for verification instructions" });
         }
 
-        [HttpPost("verify-email")]
-        public IActionResult VerifyEmail(VerifyEmailRequest model)
+        [HttpGet("verify-email")]
+        public IActionResult VerifyEmail([FromQuery] VerifyEmailRequest model)
         {
             _accountService.VerifyEmail(model.Token);
             return Ok(new { message = "Verification successful, you can now login" });
@@ -127,7 +127,7 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
 
         [Authorize(Role.Admin)]
         [HttpPost]
-        public ActionResult<AccountResponse> Create(CreateRequest model)
+        public ActionResult<AccountResponse> Create(AccountCreateRequest model)
         {
             var account = _accountService.Create(model);
             return Ok(account);
@@ -135,7 +135,7 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
 
         [Authorize]
         [HttpPut("{id:int}")]
-        public ActionResult<AccountResponse> Update(string id, UpdateRequest model)
+        public ActionResult<AccountResponse> Update(string id, AccountUpdateRequest model)
         {
             // users can update their own account and admins can update any account
             if (id != Account.Id && Account.Role != Role.Admin)

@@ -2,7 +2,7 @@
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Models
 {
-    public class CreateRequest
+    public class AccountCreateRequest
     {
         [Required]
         public string Title { get; set; }

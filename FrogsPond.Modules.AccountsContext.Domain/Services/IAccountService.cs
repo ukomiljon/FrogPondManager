@@ -19,8 +19,8 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
         void ResetPassword(ResetPasswordRequest model);
         IEnumerable<AccountResponse> GetAll();
         AccountResponse GetById(string id);
-        AccountResponse Create(CreateRequest model);
-        AccountResponse Update(string id, UpdateRequest model);
+        AccountResponse Create(AccountCreateRequest model);
+        AccountResponse Update(string id, AccountUpdateRequest model);
         void Delete(string id);
 
     }
