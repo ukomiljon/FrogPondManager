@@ -41,11 +41,11 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
                 throw new Exception("Email or password is incorrect");
 
             // authentication successful so generate jwt and refresh tokens
-            var jwtToken = generateJwtToken(account, secret);
+            var jwtToken = generateJwtToken(account, _emailService.GetSecret());
             var refreshToken = generateRefreshToken(ipAddress);
 
-            // save refresh token
-            account.RefreshTokens.Add(refreshToken);
+            // save refresh token            
+            account.AddResetToken(refreshToken);
             await _accountRepository.Update(account);
 
             var response = _mapper.Map<AuthenticateResponse>(account);
@@ -63,7 +63,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             refreshToken.Revoked = DateTime.UtcNow;
             refreshToken.RevokedByIp = ipAddress;
             refreshToken.ReplacedByToken = newRefreshToken.Token;
-            account.RefreshTokens.Add(newRefreshToken);
+            account.AddResetToken(newRefreshToken);
             await _accountRepository.Update(account);
 
             // generate new jwt
@@ -82,7 +82,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             // revoke token and save
             refreshToken.Revoked = DateTime.UtcNow;
             refreshToken.RevokedByIp = ipAddress;
-            _accountRepository.Update(account);
+            await _accountRepository.Update(account);
         }
 
         public async Task Register(RegisterRequest model, string origin)
@@ -244,7 +244,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
         private string generateJwtToken(Account account, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secret);
+            var key = Encoding.ASCII.GetBytes(_emailService.GetSecret());
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] { new Claim("id", account.Id.ToString()) }),

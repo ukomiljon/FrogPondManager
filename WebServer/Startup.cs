@@ -24,6 +24,9 @@ using FrogsPond.Modules.FrogsContext.Domain.Services;
 using FrogsPond.Modules.FrogsContext.Domain.Services.Implementations;
 using FrogsPond.Modules.FrogsContext.Domain.RepositoryInterfaces;
 using FrogsPond.Modules.FrogsContext.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace WebServer
 {
@@ -71,6 +74,33 @@ namespace WebServer
             services.AddScoped<IFrogService, FrogService>();
             services.AddScoped<IFrogRepository, FrogMongoDBRepository>();
 
+            AddAuthentication(services);
+        }
+
+        private void AddAuthentication(IServiceCollection services)
+        {
+            // Adding Authentication
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+
+            // Adding Jwt Bearer
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

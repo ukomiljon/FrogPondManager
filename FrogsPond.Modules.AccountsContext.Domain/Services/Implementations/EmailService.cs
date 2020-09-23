@@ -8,7 +8,7 @@ using MimeKit.Text;
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Services
 {
-   
+
 
     public class EmailService : IEmailService
     {
@@ -34,6 +34,8 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             smtp.Authenticate(_smtpData.SmtpUser, _smtpData.SmtpPass);
             smtp.Send(email);
             smtp.Disconnect(true);
-        }
+        } 
+
+        public string GetSecret() => _smtpData.Secret;
     }
 }
