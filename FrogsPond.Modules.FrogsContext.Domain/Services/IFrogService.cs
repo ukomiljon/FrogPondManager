@@ -3,16 +3,17 @@ using FrogsPond.Modules.FrogsContext.Domain.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FrogsPond.Modules.FrogsContext.Domain.Services
 {
-   public interface IFrogService
+    public interface IFrogService
     {
-        IEnumerable<FrogResponse> GetAll();
-        IEnumerable<FrogResponse> GetAllByUserId(string userId);
-        FrogResponse GetById(string id);
-        FrogResponse Create(FrogCreateRequest model);
-        FrogResponse Update(string id, FrogUpdateRequest model);
-        void Delete(string id);
+        Task<IEnumerable<FrogResponse>> GetAll();
+        Task<IEnumerable<FrogResponse>> GetAllByUserId(string userId);
+        Task<FrogResponse> GetById(string id);
+        Task<FrogResponse> Create(FrogCreateRequest model);
+        Task<FrogResponse> Update(string id, FrogUpdateRequest model);
+        Task Delete(string id);
     }
 }

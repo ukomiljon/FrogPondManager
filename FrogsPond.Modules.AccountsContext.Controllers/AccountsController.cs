@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using FrogsPond.Modules.AccountsContext.Domain.Entities;
 using FrogsPond.Modules.AccountsContext.Domain.Models;
@@ -29,32 +30,26 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
             _mapper = mapper;
         }
 
-        //[HttpGet]
-        //public string Get()
-        //{
-        //    return "hello from accounts " + new Random().Next(100); ;
-        //}
-         
         [HttpPost("authenticate")]
-        public ActionResult<AuthenticateResponse> Authenticate(AuthenticateRequest model, string secret)
+        public async  Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest model, string secret)
         {
-            var response = _accountService.Authenticate(model, ipAddress(), secret);
+            var response = await _accountService.Authenticate(model, ipAddress(), secret);
             setTokenCookie(response.RefreshToken);
             return Ok(response);
         }
 
         [HttpPost("refresh-token")]
-        public ActionResult<AuthenticateResponse> RefreshToken(string secret)
+        public async Task<ActionResult<AuthenticateResponse>> RefreshToken(string secret)
         {
             var refreshToken = Request.Cookies["refreshToken"];
-            var response = _accountService.RefreshToken(refreshToken, ipAddress(), secret);
+            var response = await _accountService.RefreshToken(refreshToken, ipAddress(), secret);
             setTokenCookie(response.RefreshToken);
             return Ok(response);
         }
 
         [Authorize]
         [HttpPost("revoke-token")]
-        public IActionResult RevokeToken(RevokeTokenRequest model)
+        public async Task<IActionResult> RevokeToken(RevokeTokenRequest model)
         {
             // accept token from request body or cookie
             var token = model.Token ?? Request.Cookies["refreshToken"];
@@ -66,76 +61,76 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
             if (!Account.OwnsToken(token) && Account.Role != Role.Admin)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            _accountService.RevokeToken(token, ipAddress());
+            await _accountService.RevokeToken(token, ipAddress());
             return Ok(new { message = "Token revoked" });
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RegisterRequest model)
+        public async Task<IActionResult> Register(RegisterRequest model)
         {
-            _accountService.Register(model, Request.Headers["origin"]);
+            await _accountService.Register(model, Request.Headers["origin"]);
             return Ok(new { message = "Registration successful, please check your email for verification instructions" });
         }
 
         [HttpGet("verify-email")]
-        public IActionResult VerifyEmail([FromQuery] VerifyEmailRequest model)
+        public async Task<IActionResult> VerifyEmail([FromQuery] VerifyEmailRequest model)
         {
-            _accountService.VerifyEmail(model.Token);
+            await _accountService.VerifyEmail(model.Token);
             return Ok(new { message = "Verification successful, you can now login" });
         }
 
         [HttpPost("forgot-password")]
-        public IActionResult ForgotPassword(ForgotPasswordRequest model)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest model)
         {
-            _accountService.ForgotPassword(model, Request.Headers["origin"]);
+           await _accountService.ForgotPassword(model, Request.Headers["origin"]);
             return Ok(new { message = "Please check your email for password reset instructions" });
         }
 
         [HttpPost("validate-reset-token")]
-        public IActionResult ValidateResetToken(ValidateResetTokenRequest model)
+        public async Task<IActionResult> ValidateResetToken(ValidateResetTokenRequest model)
         {
-            _accountService.ValidateResetToken(model);
+            await _accountService.ValidateResetToken(model);
             return Ok(new { message = "Token is valid" });
         }
 
         [HttpPost("reset-password")]
-        public IActionResult ResetPassword(ResetPasswordRequest model)
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest model)
         {
-            _accountService.ResetPassword(model);
+            await _accountService.ResetPassword(model);
             return Ok(new { message = "Password reset successful, you can now login" });
         }
 
         [Authorize(Role.Admin)]
         [HttpGet]
-        public ActionResult<IEnumerable<AccountResponse>> GetAll()
+        public async Task<ActionResult<IEnumerable<AccountResponse>>> GetAll()
         {
-            var accounts = _accountService.GetAll();
+            var accounts = await _accountService.GetAll();
             return Ok(accounts);
         }
 
         [Authorize]
         [HttpGet("{id:int}")]
-        public ActionResult<AccountResponse> GetById(string id)
+        public async Task<ActionResult<AccountResponse>> GetById(string id)
         {
             // users can get their own account and admins can get any account
             if (id != Account.Id && Account.Role != Role.Admin)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            var account = _accountService.GetById(id);
+            var account = await _accountService.GetById(id);
             return Ok(account);
         }
 
         [Authorize(Role.Admin)]
         [HttpPost]
-        public ActionResult<AccountResponse> Create(AccountCreateRequest model)
+        public async Task<ActionResult<AccountResponse>> Create(AccountCreateRequest model)
         {
-            var account = _accountService.Create(model);
+            var account = await _accountService.Create(model);
             return Ok(account);
         }
 
         [Authorize]
         [HttpPut("{id:int}")]
-        public ActionResult<AccountResponse> Update(string id, AccountUpdateRequest model)
+        public async Task<ActionResult<AccountResponse>> Update(string id, AccountUpdateRequest model)
         {
             // users can update their own account and admins can update any account
             if (id != Account.Id && Account.Role != Role.Admin)
@@ -145,19 +140,19 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
             if (Account.Role != Role.Admin)
                 model.Role = null;
 
-            var account = _accountService.Update(id, model);
+            var account = await _accountService.Update(id, model);
             return Ok(account);
         }
 
         [Authorize]
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             // users can delete their own account and admins can delete any account
             if (id != Account.Id && Account.Role != Role.Admin)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            _accountService.Delete(id);
+            await _accountService.Delete(id);
             return Ok(new { message = "Account deleted successfully" });
         }
 

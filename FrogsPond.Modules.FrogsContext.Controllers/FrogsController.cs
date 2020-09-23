@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using FrogsPond.Modules.AccountsContext.Domain.Entities;
 using FrogsPond.Modules.AccountsContext.Domain.UseCases;
@@ -24,57 +25,53 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
             _mapper = mapper;
         }
 
-
-        [Authorize(Role.Admin)]
         [HttpGet]
-        public ActionResult<IEnumerable<FrogResponse>> GetAll()
+        public async Task<ActionResult<IEnumerable<FrogResponse>>> GetAll()
         {
-            var frogs = _frogService.GetAll();
+            var frogs = await _frogService.GetAll();
             return Ok(frogs);
         }
 
-        [Authorize(Role.Admin)]
-        [AuthorizeUserAttribute]
+
         [HttpGet("{id}/{userId}")]
-        public ActionResult<FrogResponse> GetById(string id, string userId)
+        public async Task<ActionResult<FrogResponse>> GetById(string id, string userId)
         {
-            var frog = _frogService.GetById(id);
+            var frog = await _frogService.GetById(id);
             return Ok(frog);
         }
 
-        [Authorize(Role.Admin)]
-        [AuthorizeUserAttribute]
+
         [HttpGet("{userId}")]
-        public ActionResult<IEnumerable<FrogResponse>> GetByUserId(string userId)
+        public async Task<ActionResult<IEnumerable<FrogResponse>>> GetByUserId(string userId)
         {
-            var frogs = _frogService.GetAllByUserId(userId);
+            var frogs = await _frogService.GetAllByUserId(userId);
             return Ok(frogs);
         }
 
-        [Authorize(Role.Admin)]
-        [AuthorizeUserAttribute]
+
+        [Authorize]
         [HttpPost]
-        public ActionResult<FrogResponse> Create(FrogCreateRequest model)
+        public async Task<ActionResult<FrogResponse>> Create(FrogCreateRequest model)
         {
-            var frog = _frogService.Create(model);
+            var frog = await _frogService.Create(model);
             return Ok(frog);
         }
 
-        [Authorize(Role.Admin)]
-        [AuthorizeUserAttribute]
+
+        [Authorize]
         [HttpPut("{id:int}")]
-        public ActionResult<FrogResponse> Update(string id, FrogUpdateRequest model)
+        public async Task<ActionResult<FrogResponse>> Update(string id, FrogUpdateRequest model)
         {
-            var frog = _frogService.Update(id, model);
+            var frog = await _frogService.Update(id, model);
             return Ok(frog);
         }
 
-        [Authorize(Role.Admin)]
-        [AuthorizeUserAttribute]
+
+        [Authorize]
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            _frogService.Delete(id);
+            await _frogService.Delete(id);
             return Ok(new { message = "Frog deleted successfully" });
         }
     }

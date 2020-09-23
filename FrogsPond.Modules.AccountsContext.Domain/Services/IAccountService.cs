@@ -4,24 +4,25 @@ using FrogsPond.Modules.AccountsContext.Domain.UseCases.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Services
 {
     public interface IAccountService
     {
-        AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress, string secret);
-        AuthenticateResponse RefreshToken(string token, string ipAddress, string secret);
-        void RevokeToken(string token, string ipAddress);
-        void Register(RegisterRequest model, string origin);
-        void VerifyEmail(string token);
-        void ForgotPassword(ForgotPasswordRequest model, string origin);
-        void ValidateResetToken(ValidateResetTokenRequest model);
-        void ResetPassword(ResetPasswordRequest model);
-        IEnumerable<AccountResponse> GetAll();
-        AccountResponse GetById(string id);
-        AccountResponse Create(AccountCreateRequest model);
-        AccountResponse Update(string id, AccountUpdateRequest model);
-        void Delete(string id);
+        Task<AuthenticateResponse> Authenticate(AuthenticateRequest model, string ipAddress, string secret);
+        Task<AuthenticateResponse> RefreshToken(string token, string ipAddress, string secret);
+        Task RevokeToken(string token, string ipAddress);
+        Task Register(RegisterRequest model, string origin);
+        Task VerifyEmail(string token);
+        Task ForgotPassword(ForgotPasswordRequest model, string origin);
+        Task ValidateResetToken(ValidateResetTokenRequest model);
+        Task ResetPassword(ResetPasswordRequest model);
+        Task<IEnumerable<AccountResponse>> GetAll();
+        Task<AccountResponse> GetById(string id);
+        Task<AccountResponse> Create(AccountCreateRequest model);
+        Task<AccountResponse> Update(string id, AccountUpdateRequest model);
+        Task Delete(string id);
 
     }
 }

@@ -6,6 +6,7 @@ using FrogsPond.Modules.FrogsContext.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FrogsPond.Modules.FrogsContext.Domain.Services.Implementations
 {
@@ -20,52 +21,52 @@ namespace FrogsPond.Modules.FrogsContext.Domain.Services.Implementations
             _mapper = mapper;
         }
 
-        public FrogResponse Create(FrogCreateRequest model)
+        public async Task<FrogResponse> Create(FrogCreateRequest model)
         {
             var frog = _mapper.Map<Frog>(model);
             frog.Created = DateTime.UtcNow;
 
-            _frogRepository.Add(frog);
+            await _frogRepository.Add(frog);
 
             return _mapper.Map<FrogResponse>(frog);
         }
 
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
-            _frogRepository.Delete(id);
+           await  _frogRepository.Delete(id);
         }
 
-        public IEnumerable<FrogResponse> GetAll()
+        public async Task<IEnumerable<FrogResponse>> GetAll()
         {
-            var frogs = _frogRepository.GetAll();
+            var frogs = await _frogRepository.GetAll();
             return _mapper.Map<IList<FrogResponse>>(frogs);
         }
 
-        public IEnumerable<FrogResponse> GetAllByUserId(string userId)
+        public async Task<IEnumerable<FrogResponse>> GetAllByUserId(string userId)
         {
-            var frogs = _frogRepository.GetAllByUserId(userId);
+            var frogs = await _frogRepository.GetAllByUserId(userId);
             return _mapper.Map<IList<FrogResponse>>(frogs);
         }
 
-        public FrogResponse GetById(string id)
+        public async Task<FrogResponse> GetById(string id)
         {            
-            return _mapper.Map<FrogResponse>(GetFrogById(id));
+            return _mapper.Map<FrogResponse>(await GetFrogById(id));
         }
 
-        public FrogResponse Update(string id, FrogUpdateRequest model)
+        public async Task<FrogResponse> Update(string id, FrogUpdateRequest model)
         {
-            var frog = GetFrogById(id);
+            var frog = await GetFrogById(id);
             _mapper.Map(model, frog);
 
             frog.Updated = DateTime.UtcNow;
-            _frogRepository.Update(id, frog);
+            await _frogRepository.Update(id, frog);
 
             return _mapper.Map<FrogResponse>(frog);
         }
 
-        private Frog GetFrogById(string id)
+        private async Task<Frog> GetFrogById(string id)
         {
-            var frog = _frogRepository.GetById(id).Result;
+            var frog = await _frogRepository.GetById(id);
             if (frog == null) throw new KeyNotFoundException("Frog not found");
 
             return frog;
