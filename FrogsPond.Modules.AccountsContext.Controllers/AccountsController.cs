@@ -136,7 +136,7 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id:int}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<AccountResponse>> Update(string id, AccountUpdateRequest model)
         {
             // users can update their own account and admins can update any account
@@ -152,7 +152,7 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             // users can delete their own account and admins can delete any account
