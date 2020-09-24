@@ -116,7 +116,7 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id:int}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<AccountResponse>> GetById(string id)
         {
             // users can get their own account and admins can get any account

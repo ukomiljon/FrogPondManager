@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 import ".././App.css";
 import accountsService from "../services/accounts.service";
 import Frogs from "./Frogs";
@@ -10,22 +10,23 @@ import Login from "./Login";
 import Register from "./Register";
 import Profile from "./Profile";
 import Users from "./Users";
+import frogsService from "../services/frogs.service";
 
 
 
 
 export default function RouterNav() {
 
-    const [showFrogs] = useState(false);
+    const [frogs, setFrogs] = useState(false);
 
     const { user: currentUser } = useSelector((state: any) => state.auth);
-    const dispatch = useDispatch();
-
+    const dispatch = useDispatch(); 
 
     useEffect(() => {
-
-        // showFrogs(currentUser.roles.includes("ROLE_ADMIN"));
-
+        frogsService.getAll().then((data:any) => {
+            setFrogs(data)
+            console.log("data=",data)
+        })
     }, [currentUser]);
 
     const logOut = () => {

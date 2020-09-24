@@ -7,13 +7,20 @@ const getAll = () => {
     return axios.get(API_URL);
 };
 
+const getById = (id:any) => {
+    return axios.get(API_URL + `/${id}`);
+};
+
 const register = (account:any) => {
-    return axios.post(API_URL + "register", account, { headers: originHeader  });
+    return axios.post(API_URL + "register", account, { headers: originHeader })
+        .then((response:any) => {
+            return response.data
+        });
 };
 
 const authenticate = (account: any) => {
     return axios.post(API_URL + "authenticate", account, { headers: originHeader })
-        .then((response) => {
+        .then((response:any) => {
             if (response.data.accessToken) {
                 localStorage.setItem("account", JSON.stringify(response.data));
             }
@@ -23,15 +30,24 @@ const authenticate = (account: any) => {
 };
  
 const create = (account: any) => {
-    return axios.post(API_URL, account, { headers: authHeader() });
+    return axios.post(API_URL, account, { headers: authHeader() })
+        .then((response: any) => {
+            return response.data
+        });
 };
 
 const update = (account: any, id:any) => {
-    return axios.put(API_URL + `/${id}`, account,{ headers: authHeader() });
+    return axios.put(API_URL + `/${id}`, account, { headers: authHeader() })
+        .then((response: any)  => {
+            return response.data
+        });
 };
 
 const remove = (id: any) => {
-    return axios.delete(API_URL + `/${id}`, { headers: authHeader() });
+    return axios.delete(API_URL + `/${id}`, { headers: authHeader() })
+        .then((response: any)  => {
+            return response.data
+        });
 };
 
 const logout = (dispatch: any) => {
@@ -39,7 +55,7 @@ const logout = (dispatch: any) => {
     //dispatch({
     //    type: LOGOUT,
     //});
-};
+}
 
  
 
@@ -50,5 +66,6 @@ export default {
     create,
     update,
     remove,
-    logout
+    logout,
+    getById
 };

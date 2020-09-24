@@ -1,8 +1,9 @@
-﻿import React, { useState, useEffect } from "react";
+﻿import React, { useEffect, useState } from 'react' 
+import InputForm from './templates/InputForm';
 import frogsService from '../services/frogs.service'
-import ViewForm from "./templates/ViewForm";
- 
-const Frogs = () => {
+
+export default function CreateFrog(props: any) {
+    const { mode, id } = props
     const fieldNames = [
         "Name",
         "Alife",
@@ -12,16 +13,13 @@ const Frogs = () => {
 
     return (
         <div>
-            <ViewForm
+            <InputForm
                 fieldNames={fieldNames}
-                remove={frogsService.remove}
+                post={frogsService.create}
                 update={frogsService.update}
                 get={frogsService.getById}
-                getAll={frogsService.getAll}
-            />
-
+                mode={mode}
+                id={id} />
         </div>
     )
 }
-
-export default Frogs;
