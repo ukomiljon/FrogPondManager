@@ -11,7 +11,8 @@ const getById = (id:any) => {
     return axios.get(API_URL + `/${id}`);
 };
 
-const register = (account:any) => {
+const register = (account: any) => {
+    console.log("account=", account)
     return axios.post(API_URL + "register", account, { headers: originHeader })
         .then((response:any) => {
             return response.data
@@ -30,6 +31,7 @@ const authenticate = (account: any) => {
 };
  
 const create = (account: any) => {
+    console.log(account)
     return axios.post(API_URL, account, { headers: authHeader() })
         .then((response: any) => {
             return response.data

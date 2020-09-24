@@ -32,15 +32,16 @@ export default function InputForm(props: any) {
             return
         }
 
-        post(data)
+        post(data) 
     }
 
     const onChangeInput = (e: any) => {
-
+        let value = e.target.value
+        if (value === "true") value=true
         setData(
             {
                 ...data,
-                [e.target.id]: e.target.value
+                [e.target.id]: value
             })
     }
 

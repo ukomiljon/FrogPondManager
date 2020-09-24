@@ -8,11 +8,11 @@ export default function Register(props: any) {
     const fieldNames = [
         "Title",
         "FirstName",
-        "LastName",
-        "Role",
+        "LastName", 
         "Email",
         "Password",
-        "ConfirmPassword"
+        "ConfirmPassword",
+        "AcceptTerms"
     ]
 
     return (
