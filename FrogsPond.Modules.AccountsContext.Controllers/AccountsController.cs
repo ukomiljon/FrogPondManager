@@ -93,6 +93,13 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
             return Ok(new { message = "Token is valid" });
         }
 
+        [HttpGet("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromQuery] string token)
+        {
+            //await _accountService.ResetPassword(token);
+            return Ok(new { message = "Password reset successful, you can now login" });
+        }
+
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordRequest model)
         {

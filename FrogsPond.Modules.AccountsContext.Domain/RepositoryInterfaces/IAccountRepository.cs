@@ -19,7 +19,6 @@ namespace FrogsPond.Modules.AccountsContext.Domain
         Task Update(Account account);
         Task Delete(Account account);
         Task DeleteById(string id);
-        Task<int> GetCount();
-        Task<Account> SingleOrDefault(string token);
+        Task<int> GetCount(); 
     }
 }

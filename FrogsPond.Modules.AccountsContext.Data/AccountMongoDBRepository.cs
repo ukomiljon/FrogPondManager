@@ -73,14 +73,8 @@ namespace FrogsPond.Modules.AccountsContext.Data
             return (int)await _accounts.EstimatedDocumentCountAsync();
         }
 
-
-        public async Task<Account> SingleOrDefault(string token)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task Update(Account account)
-        {
+        {         
             await _accounts.ReplaceOneAsync(s => s.Id == account.Id, account);
         }
     }

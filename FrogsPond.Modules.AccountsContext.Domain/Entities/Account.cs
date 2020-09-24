@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Entities
@@ -30,7 +31,21 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Entities
 
         public bool OwnsToken(string token)
         {
-            return this.RefreshTokens?.Find(x => x.Token == token) != null;
+            foreach (var item in this.RefreshTokens)
+            {
+                if (item.Token == token) return true;
+            }
+
+            return false;
+            //return this.RefreshTokens.Find(x => x.Token == token) != null;
+        }
+
+        public void AddResetToken(RefreshToken token)
+        {
+            if (this.RefreshTokens == null)
+                this.RefreshTokens = new List<RefreshToken>();
+
+            this.RefreshTokens.Add(token);
         }
     }
 }
