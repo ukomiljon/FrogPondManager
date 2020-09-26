@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
-using FrogsPond.Modules.AccountsContext.Domain.Entities;
+﻿using AutoMapper;
 using FrogsPond.Modules.AccountsContext.Domain.UseCases;
 using FrogsPond.Modules.FrogsContext.Domain.DTOs;
 using FrogsPond.Modules.FrogsContext.Domain.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FrogsPond.Modules.FrogsContext.Controllers
 {

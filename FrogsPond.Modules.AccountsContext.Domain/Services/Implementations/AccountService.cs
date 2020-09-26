@@ -1,9 +1,7 @@
-﻿using FrogsPond.Modules.AccountsContext.Domain.Entities;
+﻿using AutoMapper;
+using FrogsPond.Modules.AccountsContext.Domain.Entities;
 using FrogsPond.Modules.AccountsContext.Domain.Models;
-using FrogsPond.Modules.AccountsContext.Domain.Services;
 using FrogsPond.Modules.AccountsContext.Domain.UseCases.DTO;
-using AutoMapper;
-using BC = BCrypt.Net.BCrypt;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -13,6 +11,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using BC = BCrypt.Net.BCrypt;
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Services
 {
@@ -99,7 +98,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             var account = _mapper.Map<Account>(model);
 
             // first registered account is an admin
-            var isFirstAccount = await  _accountRepository.GetCount() == 0;
+            var isFirstAccount = await _accountRepository.GetCount() == 0;
             account.Role = isFirstAccount ? Role.Admin : Role.User;
             account.Created = DateTime.UtcNow;
             account.VerificationToken = randomTokenString();

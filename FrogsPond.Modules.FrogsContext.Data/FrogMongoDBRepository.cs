@@ -1,9 +1,7 @@
-﻿using FrogsPond.Modules.FrogsContext.Domain.DTOs;
-using FrogsPond.Modules.FrogsContext.Domain.Entities;
+﻿using FrogsPond.Modules.FrogsContext.Domain.Entities;
 using FrogsPond.Modules.FrogsContext.Domain.RepositoryInterfaces;
 using FrogsPond.Modules.FrogsContext.Domain.Settings;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FrogsPond.Modules.FrogsContext.Domain.DTOs
+﻿namespace FrogsPond.Modules.FrogsContext.Domain.DTOs
 {
     public class FrogUpdateRequest
     {

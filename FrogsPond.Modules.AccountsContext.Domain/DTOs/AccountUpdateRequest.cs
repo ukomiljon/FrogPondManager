@@ -41,7 +41,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Models
             set => _confirmPassword = replaceEmptyWithNull(value);
         }
 
-      
+
         private string replaceEmptyWithNull(string value)
         {
             // replace empty string with null to make field optional

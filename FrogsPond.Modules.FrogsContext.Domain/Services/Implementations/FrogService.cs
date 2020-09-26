@@ -5,7 +5,6 @@ using FrogsPond.Modules.FrogsContext.Domain.Entities;
 using FrogsPond.Modules.FrogsContext.Domain.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FrogsPond.Modules.FrogsContext.Domain.Services.Implementations
@@ -33,7 +32,7 @@ namespace FrogsPond.Modules.FrogsContext.Domain.Services.Implementations
 
         public async Task Delete(string id)
         {
-           await  _frogRepository.Delete(id);
+            await _frogRepository.Delete(id);
         }
 
         public async Task<IEnumerable<FrogResponse>> GetAll()
@@ -49,7 +48,7 @@ namespace FrogsPond.Modules.FrogsContext.Domain.Services.Implementations
         }
 
         public async Task<FrogResponse> GetById(string id)
-        {            
+        {
             return _mapper.Map<FrogResponse>(await GetFrogById(id));
         }
 

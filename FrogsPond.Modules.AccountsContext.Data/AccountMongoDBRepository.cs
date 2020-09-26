@@ -74,7 +74,7 @@ namespace FrogsPond.Modules.AccountsContext.Data
         }
 
         public async Task Update(Account account)
-        {         
+        {
             await _accounts.ReplaceOneAsync(s => s.Id == account.Id, account);
         }
     }

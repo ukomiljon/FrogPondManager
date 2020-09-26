@@ -1,4 +1,4 @@
-﻿ 
+﻿
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Models
 {

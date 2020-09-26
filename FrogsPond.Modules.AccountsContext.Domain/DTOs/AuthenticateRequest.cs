@@ -1,4 +1,4 @@
-﻿ 
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace FrogsPond.Modules.AccountsContext.Domain.UseCases.DTO

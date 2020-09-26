@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FrogsPond.Modules.AccountsContext.Domain.Services
+﻿namespace FrogsPond.Modules.AccountsContext.Domain.Services
 {
     public interface IEmailService
     {

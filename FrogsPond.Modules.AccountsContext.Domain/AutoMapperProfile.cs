@@ -2,9 +2,6 @@
 using FrogsPond.Modules.AccountsContext.Domain.Entities;
 using FrogsPond.Modules.AccountsContext.Domain.Models;
 using FrogsPond.Modules.AccountsContext.Domain.UseCases.DTO;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FrogsPond.Modules.AccountsContext.Domain
 {

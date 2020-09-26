@@ -1,8 +1,6 @@
-﻿using System;
-
+﻿
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
 
@@ -34,7 +32,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Services
             smtp.Authenticate(_smtpData.SmtpUser, _smtpData.SmtpPass);
             smtp.Send(email);
             smtp.Disconnect(true);
-        } 
+        }
 
         public string GetSecret() => _smtpData.Secret;
     }

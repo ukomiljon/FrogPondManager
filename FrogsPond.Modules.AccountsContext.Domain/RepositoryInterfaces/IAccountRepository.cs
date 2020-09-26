@@ -1,7 +1,5 @@
 ﻿using FrogsPond.Modules.AccountsContext.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FrogsPond.Modules.AccountsContext.Domain
@@ -19,6 +17,6 @@ namespace FrogsPond.Modules.AccountsContext.Domain
         Task Update(Account account);
         Task Delete(Account account);
         Task DeleteById(string id);
-        Task<int> GetCount(); 
+        Task<int> GetCount();
     }
 }

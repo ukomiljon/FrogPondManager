@@ -1,14 +1,10 @@
-﻿ 
-using FrogsPond.Modules.FrogsContext.Domain.DTOs;
-using FrogsPond.Modules.FrogsContext.Domain.Entities;
-using System;
+﻿using FrogsPond.Modules.FrogsContext.Domain.Entities;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FrogsPond.Modules.FrogsContext.Domain.RepositoryInterfaces
 {
-   public interface IFrogRepository
+    public interface IFrogRepository
     {
         Task<IEnumerable<Frog>> GetAll();
         Task<IEnumerable<Frog>> GetAllByUserId(string userId);

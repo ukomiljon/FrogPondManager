@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FrogsPond.Modules.AccountsContext.Domain.Entities;
 using FrogsPond.Modules.AccountsContext.Domain.Models;
 using FrogsPond.Modules.AccountsContext.Domain.Services;
 using FrogsPond.Modules.AccountsContext.Domain.UseCases;
 using FrogsPond.Modules.AccountsContext.Domain.UseCases.DTO;
- 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FrogsPond.Modules.AccountsContext.Controllers
 {
-    [ApiController] 
+    [ApiController]
     [Route("[controller]")]
 
     public class AccountsController : BaseController
@@ -31,7 +30,7 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
         }
 
         [HttpPost("authenticate")]
-        public async  Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest model, string secret)
+        public async Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest model, string secret)
         {
             var response = await _accountService.Authenticate(model, ipAddress(), secret);
             setTokenCookie(response.RefreshToken);
@@ -82,7 +81,7 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest model)
         {
-           await _accountService.ForgotPassword(model, Request.Headers["origin"]);
+            await _accountService.ForgotPassword(model, Request.Headers["origin"]);
             return Ok(new { message = "Please check your email for password reset instructions" });
         }
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text.Json.Serialization; 
+using System.Text.Json.Serialization;
 
 namespace FrogsPond.Modules.AccountsContext.Domain.Models
 {
@@ -16,7 +16,7 @@ namespace FrogsPond.Modules.AccountsContext.Domain.Models
         public bool IsVerified { get; set; }
         public string JwtToken { get; set; }
 
-        [JsonIgnore]  
+        [JsonIgnore]
         public string RefreshToken { get; set; }
     }
 }
