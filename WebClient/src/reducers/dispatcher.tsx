@@ -1,12 +1,13 @@
-﻿import { actionType } from "./actions"
+﻿import { store } from "../store/store"
+import { actionType } from "./actions"
 
 
-export function cleanFrogs(dispatch: any) {
-    dispatch({ type: actionType.CLEAN_FROGS })
+export function cleanFrogs() {
+    store.dispatch({ type: actionType.CLEAN_FROGS })
 }
 
-export function cleanUsers(dispatch: any) {
-    dispatch({ type: actionType.CLEAN_ACCOUNTS })
+export function cleanUsers() {
+    store.dispatch({ type: actionType.CLEAN_ACCOUNTS })
 }
 
 export default function saveToRedux(data: any, dispatch: any) {

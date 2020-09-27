@@ -1,5 +1,5 @@
 ﻿import React, { useEffect, useState } from 'react'
-import { Form, Table } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
  
  
@@ -28,9 +28,7 @@ export default function ViewForm(props: any) {
     }
 
     const editHandler = (schemaId: any) => {
-        //updateEditFormState(true, dispatch)
-        //updateControllerNameState(controllerName, dispatch)
-        //updateEditSchemaById(schemaId, dispatch)
+       
     }
 
     return (
