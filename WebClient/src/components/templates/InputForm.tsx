@@ -1,8 +1,8 @@
 ﻿import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from "react-redux";
-import { modeType } from "../../reducers/actions";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { modeType } from "./TemplateMode";
 
 export default function InputForm(props: any) {
 
