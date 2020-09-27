@@ -1,34 +1,20 @@
 ﻿import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
- 
- 
+
+
 export default function ViewForm(props: any) {
 
-    const { fieldNames, remove, update, get, getAll } = props
+    const { fieldNames, remove, update, get, getAll, data} = props
     const dispatch = useDispatch()
-    const [data, setData] = useState([])
-
-    useEffect(() => {
-        getAll().then(
-            (data: any) => {
-                setData(data);
-            },
-        ).catch(
-            function (error: any) {
-                console.log(error)
-            }
-        );
-
-    }, [])
-
+    
 
     const deleteRow = (id: any) => {
         remove(id)
     }
 
     const editHandler = (schemaId: any) => {
-       
+
     }
 
     return (

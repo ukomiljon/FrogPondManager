@@ -6,12 +6,12 @@ const Frogs = () => {
     const fieldNames = [
         "Name",
         "Alife",
-        "Age",
-        "UserId"
+        "Age"      
     ]
 
     return (
         <div>
+            <p>List of Frogs</p>
             <ViewForm
                 fieldNames={fieldNames}
                 remove={frogsService.remove}

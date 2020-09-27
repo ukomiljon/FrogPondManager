@@ -1,30 +1,38 @@
 ﻿import React from "react";
-import InputForm from "./templates/InputForm"; 
-import accountsService from '../services/accounts.service'
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import InputForm from "./templates/InputForm";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useSelector } from "react-redux";
+import {actionCreators} from "../store/account.store";
+
 
 export default function Register(props: any) {
     const { mode, id } = props
+    const { account } = useSelector((state: any) => state.account);
+
     const fieldNames = [
         "Title",
         "FirstName",
-        "LastName", 
+        "LastName",
         "Email",
         "Password",
         "ConfirmPassword",
-        "AcceptTerms"
+        "AcceptTerms true/false" 
     ]
 
     return (
-        <div> 
+        <div>
             <p><h2>Register</h2></p>
+            <p>{account?.registerResponse}</p>
             <InputForm
                 fieldNames={fieldNames}
-                post={accountsService.register}
-                update={accountsService.update}
-                get={accountsService.getById}
+                post={actionCreators.register}
+                //update={accountsService.update}
+                //get={accountsService.getById}
                 mode={mode}
-                id={id} />
+                id={id}
+            />
+
+
 
         </div>
     )

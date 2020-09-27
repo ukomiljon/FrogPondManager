@@ -67,7 +67,7 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest model)
         {
-            await _accountService.Register(model, Request.Headers["origin"]);
+            await _accountService.Register(model, "http://localhost:"+HttpContext.Connection.LocalPort);
             return Ok(new { message = "Registration successful, please check your email for verification instructions" });
         }
 

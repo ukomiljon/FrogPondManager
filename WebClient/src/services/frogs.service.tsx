@@ -31,8 +31,8 @@ const create = (frog: any) => {
         });
 };
 
-const update = (id: any, frog: any) => {
-    return axios.put(API_URL + `/${id}`, frog, { headers: authHeader() })
+const update = (frog: any) => {
+    return axios.put(API_URL, frog, { headers: authHeader() })
         .then((response: any) => {
             return response.data
         });

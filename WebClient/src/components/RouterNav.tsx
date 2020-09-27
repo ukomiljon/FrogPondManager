@@ -1,73 +1,55 @@
-import React, { useState, useEffect } from "react";
+import React  from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-//import "bootstrap/dist/css/bootstrap.min.css";
 import ".././App.css";
-import accountsService from "../services/accounts.service";
 import Frogs from "./Frogs";
 import Login from "./Login";
 import Register from "./Register";
 import Profile from "./Profile";
 import Users from "./Users";
-import frogsService from "../services/frogs.service";
-
-
-
+import { actionCreators } from "../store/account.store"; 
 
 export default function RouterNav() {
 
-    const [frogs, setFrogs] = useState(false);
-
-    const { user: currentUser } = useSelector((state: any) => state.auth);
-    const dispatch = useDispatch(); 
-
-    useEffect(() => {
-        frogsService.getAll().then((data:any) => {
-            setFrogs(data)
-            console.log("data=",data)
-        })
-    }, [currentUser]);
-
-    const logOut = () => {
-        accountsService.logout(dispatch)
+    const dispatch = useDispatch()
+    const { account } = useSelector((state: any) => state.account?.account);  
+    console.log(account)
+    const logOut = (e:any) => {
+        e.preventDefault();
+        dispatch(actionCreators.logout())
     };
 
     return (
         <Router >
             <div>
                 <nav className="navbar navbar-expand navbar-dark bg-dark">
-                    <Link to={"/"} className="navbar-brand">
-                        FrogsPond
-      </Link>
+                    <Link to={"/"} className="navbar-brand">FrogsPond</Link>
                     <div className="navbar-nav mr-auto">
-
                         <li className="nav-item">
-                            <Link to={"/home"} className="nav-link">
-                                Home
-          </Link>
+                            <Link to={"/home"} className="nav-link">Home</Link>
                         </li>
 
-                        {currentUser && (
+                        {account&&account.role==="Admin" && (
                             <li className="nav-item">
                                 <Link to={"/user"} className="nav-link">
                                     Users
-            </Link>
+                                 </Link>
                             </li>
                         )}
                     </div>
 
-                    {currentUser ? (
+                    {account ? (
                         <div className="navbar-nav ml-auto">
                             <li className="nav-item">
                                 <Link to={"/profile"} className="nav-link">
-                                    {currentUser.username}
+                                    {account.username}
                                 </Link>
                             </li>
                             <li className="nav-item">
                                 <a href="/login" className="nav-link" onClick={logOut}>
                                     LogOut
-            </a>
+                                </a>
                             </li>
                         </div>
                     ) : (
@@ -75,13 +57,13 @@ export default function RouterNav() {
                                 <li className="nav-item">
                                     <Link to={"/login"} className="nav-link">
                                         Login
-            </Link>
+                                    </Link>
                                 </li>
 
                                 <li className="nav-item">
                                     <Link to={"/register"} className="nav-link">
                                         Sign Up
-            </Link>
+                                     </Link>
                                 </li>
                             </div>
                         )}
@@ -93,7 +75,7 @@ export default function RouterNav() {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/profile" component={Profile} />
-                        <Route path="/user" component={Users} /> 
+                        <Route path="/user" component={Users} />
                     </Switch>
                 </div>
             </div>

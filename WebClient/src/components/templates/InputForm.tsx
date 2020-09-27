@@ -1,12 +1,12 @@
 ﻿import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Row } from 'react-bootstrap' 
+import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from "react-redux";
 import { modeType } from "../../reducers/actions";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function InputForm(props: any) {
-  const editMode = useSelector((state: any) => state.editMode);
-  const { fieldNames, post, update, get, mode, id } = props;
+
+  const { fieldNames, post, update, get, mode, id, redirection } = props;
   const [data, setData] = useState({});
   const dispatch = useDispatch();
 
@@ -16,7 +16,7 @@ export default function InputForm(props: any) {
     }
   }, []);
 
-  const submitData = (e: any) => {
+  const submitData = async (e: any) => {
     e.preventDefault();
 
     if (mode === modeType.edit) {
@@ -24,7 +24,9 @@ export default function InputForm(props: any) {
       return;
     }
 
-    post(data);
+    dispatch(post(data))
+    if (redirection) redirection()
+    setData({})
   };
 
   const onChangeInput = (e: any) => {
