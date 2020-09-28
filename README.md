@@ -1,17 +1,23 @@
 # FrogPondManager
 
-Moduller Clean Architecture with ASP.NET core and React
+### Moduller Clean Architecture with ASP.NET core and React
 
-Backend:
+### Backend:
 ASP.net core
 Api documents: http://localhost:5000/swagger/index.html
 
-Email test: 
+### Email test: 
 It is used https://ethereal.email/  for testing verification email
 
-Datasources:
+### Datasources:
 It can be used any datasource by implementing repository interfaces according to each module.
 In this case it is used MongoDB.
 
-Frontend:
+### Frontend:
 React, Redux, Hook
+
+
+
+## Clean Architecture
+
+![1_jH0iI7-MSQYgLUrqTUm6mg](https://user-images.githubusercontent.com/16934572/94404334-658c7b80-01a1-11eb-8485-b7f5bc0d6695.png)
