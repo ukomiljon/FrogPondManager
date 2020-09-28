@@ -1,8 +1,10 @@
-﻿import React from 'react' 
-import InputForm from './templates/InputForm'; 
+﻿import React from 'react'
+import InputForm from './templates/InputForm';
 import frogsService from '../services/frogs.service'
+import { useHistory } from 'react-router-dom';
 
 export default function CreateFrog(props: any) {
+    const history = useHistory();
     const { mode, id } = props
     const fieldNames = [
         "Name",
@@ -10,6 +12,10 @@ export default function CreateFrog(props: any) {
         "Age",
         "UserId"
     ]
+
+    const redirect = () => {
+        history.push("/");
+    }
 
     return (
         <div>
@@ -19,7 +25,9 @@ export default function CreateFrog(props: any) {
                 update={frogsService.update}
                 get={frogsService.getById}
                 mode={mode}
-                id={id} />
+                id={id}
+                redirect={redirect}
+            />
         </div>
     )
 }

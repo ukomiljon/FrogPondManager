@@ -24,7 +24,7 @@ export default function InputForm(props: any) {
       return;
     }
 
-    dispatch(post(data))
+    if(post)dispatch(post(data))
     if (redirect) redirect()
     setData({})
   };

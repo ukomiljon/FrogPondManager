@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 
 export default function ViewForm(props: any) {
@@ -8,6 +9,7 @@ export default function ViewForm(props: any) {
     const { fieldNames, remove, update, get, getAll, data } = props
     const dispatch = useDispatch()
     const { account } = useSelector((state: any) => state.account?.account);
+    const history = useHistory();
 
     const deleteRow = (id: any) => {
         remove(id)
@@ -17,11 +19,15 @@ export default function ViewForm(props: any) {
 
     }
 
+    const createHandler = (id:any) => {
+        //history.push("/frogs"); 
+    }
+
     return (
         <div>
             {account &&
                 <>
-                    <div> <button className="btn btn-secondary btn-sm"   >  Create new </button></div>
+                    <div> <button className="btn btn-secondary btn-sm" onClick={createHandler}  >  Create new </button></div>
                     <div> &nbsp;</div>
                 </>
             }
