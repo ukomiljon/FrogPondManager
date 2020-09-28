@@ -3,7 +3,7 @@
 ### Modular Clean Architecture with ASP.NET core and React
 
 ### Backend:
-ASP.net core \
+ASP.NET core \
 Api documents: http://localhost:5000/swagger/index.html
 
 ### Email test: 
