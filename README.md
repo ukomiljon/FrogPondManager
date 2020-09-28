@@ -1,6 +1,6 @@
 # FrogPondManager
 
-### Moduller Clean Architecture with ASP.NET core and React
+### Modular Clean Architecture with ASP.NET core and React
 
 ### Backend:
 ASP.net core
