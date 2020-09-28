@@ -1,4 +1,4 @@
-# FrogPondManager
+# Frog Pond Manager
 
 ### Modular Clean Architecture with ASP.NET core and React
 
