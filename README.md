@@ -14,7 +14,7 @@ It can be used any datasource by implementing repository interfaces according to
 In this case it is used MongoDB.
 
 ### Frontend:
-React, Redux, Hook
+React, Redux, Redux Toolkit, React Hook
 
 
 
