@@ -9,18 +9,16 @@ export default function Accounts(props: any) {
     
     useEffect(() => { 
          dispatch(actionCreators.getAll())
-         console.log(account)
+         console.log("account=",account)
     }, [])
 
 
     const fieldNames = [
-        "Title",
-        "FirstName",
-        "LastName",
-        "Role",
-        "Email",
-        "Password",
-        "ConfirmPassword"
+        "title",
+        "firstName",
+        "lastName",
+        "role",
+        "email", 
     ]
  
     return (

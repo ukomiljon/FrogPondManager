@@ -40,7 +40,7 @@ const register = (account: any) => {
 // title:'Mr.'}
 const authenticate = (account: any) => {
   return axios
-    .post(API_URL + "authenticate", account, { headers: originHeader })
+    .post(API_URL + "authenticate", account, { headers: authHeader() })
     .then((response: any) => {
       return { payload: response.data, hasErrors: false }
     }).catch((error: any) => {

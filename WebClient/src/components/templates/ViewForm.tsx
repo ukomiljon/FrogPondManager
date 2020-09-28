@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 export default function ViewForm(props: any) {
 
     const { fieldNames, remove, update, get, getAll, data} = props
-    const dispatch = useDispatch()
-    
+    const dispatch = useDispatch()   
 
     const deleteRow = (id: any) => {
         remove(id)

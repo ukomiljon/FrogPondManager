@@ -47,7 +47,7 @@ export default function InputForm(props: any) {
       <Form>
         {fieldNames.map((fieldName: any) => {
           let inputType = "text";
-          if (fieldName == "password") inputType = "password";
+          if (fieldName === "password") inputType = "password";
 
           return (
             <Form.Group as={Row}>

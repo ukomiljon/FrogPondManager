@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using WebServer.Middleware;
 
 namespace WebServer
 {
@@ -109,10 +110,10 @@ namespace WebServer
                 .AllowCredentials());
 
             // global error handler
-            //app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             // custom jwt auth middleware
-            //app.UseMiddleware<JwtMiddleware>();
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(x => x.MapControllers());
         }
