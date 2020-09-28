@@ -3,6 +3,8 @@ import authHeader, { originHeader } from "./auth-header";
 
 const API_URL = "http://localhost:5000/accounts/";
 
+export const  role={admin:"Admin",user:"User"}
+
 const getAll = () => {
   return axios.get(API_URL, { headers: authHeader() }).then((response: any) => {
     return { payload: response.data, hasErrors: false }

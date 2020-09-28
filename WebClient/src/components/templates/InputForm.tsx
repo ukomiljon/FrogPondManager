@@ -6,7 +6,7 @@ import { modeType } from "./TemplateMode";
 
 export default function InputForm(props: any) {
 
-  const { fieldNames, post, update, get, mode, id, redirection } = props;
+  const { fieldNames, post, update, get, mode, id, redirect } = props;
   const [data, setData] = useState({});
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ export default function InputForm(props: any) {
     }
 
     dispatch(post(data))
-    if (redirection) redirection()
+    if (redirect) redirect()
     setData({})
   };
 

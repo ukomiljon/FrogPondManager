@@ -1,6 +1,6 @@
-import React  from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 import ".././App.css";
 import Frogs from "./Frogs";
@@ -8,17 +8,26 @@ import Login from "./Login";
 import Register from "./Register";
 import Profile from "./Profile";
 import Users from "./Users";
-import { actionCreators } from "../store/account.store"; 
+import { actionCreators } from "../store/account.store";
+import { role } from "../services/accounts.service";
 
 export default function RouterNav() {
 
     const dispatch = useDispatch()
-    const { account } = useSelector((state: any) => state.account?.account);  
-    console.log(account)
-    const logOut = (e:any) => {
+    const { account } = useSelector((state: any) => state.account?.account);
+    const history = useHistory();
+
+    const logOut = (e: any) => {
         e.preventDefault();
-        dispatch(actionCreators.logout())
+        dispatch(actionCreators.logout())  
+        //redirect()
     };
+
+    const redirect = () => {
+        history.push("/home");
+    }
+
+   
 
     return (
         <Router >
@@ -30,7 +39,7 @@ export default function RouterNav() {
                             <Link to={"/home"} className="nav-link">Home</Link>
                         </li>
 
-                        {account&&account.role==="Admin" && (
+                        {account && account.role === role.admin && (
                             <li className="nav-item">
                                 <Link to={"/user"} className="nav-link">
                                     Users

@@ -12,7 +12,7 @@ export default function Login() {
         "Password"
     ]
 
-    const redirection = () => {
+    const redirect = () => {
         history.push("/");
     }
 
@@ -22,7 +22,7 @@ export default function Login() {
             <InputForm
                 fieldNames={fieldNames}
                 post={actionCreators.login}
-                redirection={redirection}
+                redirect={redirect}
             />
         </div>
     )
