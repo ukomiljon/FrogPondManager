@@ -98,7 +98,7 @@ export const actionCreators = {
             dispatch(slice.actions.setFetching(false)); 
         }  
     },
-    remove: (id: any) => async (dispatch: Dispatch) => {
+    delete: (id: any) => async (dispatch: Dispatch) => {
 
 
     },

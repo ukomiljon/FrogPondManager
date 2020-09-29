@@ -1,16 +1,15 @@
 ﻿import React from 'react'
 import InputForm from './templates/InputForm';
-import frogsService from '../services/frogs.service'
 import { useHistory } from 'react-router-dom';
+import { actionCreators } from "../store/frog.store";
 
 export default function CreateFrog(props: any) {
     const history = useHistory();
     const { mode, id } = props
     const fieldNames = [
-        "Name",
-        "Alife",
-        "Age",
-        "UserId"
+        "name",
+        "type",
+        "color", 
     ]
 
     const redirect = () => {
@@ -21,9 +20,9 @@ export default function CreateFrog(props: any) {
         <div>
             <InputForm
                 fieldNames={fieldNames}
-                post={frogsService.create}
-                update={frogsService.update}
-                get={frogsService.getById}
+                post={actionCreators.create}
+                update={actionCreators.update}
+                get={actionCreators.getAll}
                 mode={mode}
                 id={id}
                 redirect={redirect}

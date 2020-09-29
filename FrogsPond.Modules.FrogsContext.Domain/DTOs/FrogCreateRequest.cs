@@ -7,10 +7,9 @@ namespace FrogsPond.Modules.FrogsContext.Domain.DTOs
         [Required]
         public string Name { get; set; }
         [Required]
-        public bool Alife { get; set; }
+        public string Type { get; set; }
         [Required]
-        public int Age { get; set; }
-        [Required]
-        public string UserId { get; set; }
+        public string Color { get; set; }
+       
     }
 }

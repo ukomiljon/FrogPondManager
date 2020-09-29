@@ -1,12 +1,27 @@
 ﻿import React, { useState, useEffect } from "react";
-import frogsService from '../services/frogs.service'
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import ViewForm from "./templates/ViewForm";
- 
+import { actionCreators } from "../store/frog.store";
+
+
 const Frogs = () => {
+    const dispatch = useDispatch()
+    const { frog } = useSelector((state: any) => state.frog);
+    const history = useHistory();
+
+    useEffect(() => {
+        dispatch(actionCreators.getAll())          
+    }, [])
+
+    const redirect = () => {
+        history.push("/");
+    }
+
     const fieldNames = [
-        "Name",
-        "Alife",
-        "Age"      
+        "name",
+        "type",
+        "color",     
     ]
 
     return (
@@ -14,10 +29,10 @@ const Frogs = () => {
             <p>List of Frogs</p>
             <ViewForm
                 fieldNames={fieldNames}
-                remove={frogsService.remove}
-                update={frogsService.update}
-                get={frogsService.getById}
-                getAll={frogsService.getAll}
+                remove={actionCreators.delete}
+                update={actionCreators.update} 
+                getAll={actionCreators.getAll}
+                data={frog?.frogs}
             />
 
         </div>

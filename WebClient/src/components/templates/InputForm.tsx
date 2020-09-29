@@ -20,11 +20,11 @@ export default function InputForm(props: any) {
     e.preventDefault();
 
     if (mode === modeType.edit) {
-      update(data);
+      if (update) dispatch(update(data))
       return;
     }
 
-    if(post)dispatch(post(data))
+    if (post) dispatch(post(data))
     if (redirect) redirect()
     setData({})
   };

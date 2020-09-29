@@ -5,12 +5,12 @@ import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-
 import ".././App.css";
 import Frogs from "./Frogs";
 import Login from "./Login";
-import Register from "./Register";
-import Profile from "./Profile";
+import Register from "./Register"; 
 import Users from "./Users";
 import { actionCreators } from "../store/account.store";
 import { role } from "../services/accounts.service";
 import CreateFrog from "./CreateFrog";
+ 
 
 export default function RouterNav() {
 
@@ -53,7 +53,7 @@ export default function RouterNav() {
                         <div className="navbar-nav ml-auto">
                             <li className="nav-item">
                                 <Link to={"/profile"} className="nav-link">
-                                    {account.username}
+                                   Hi, {account.firstName +' ' + account.lastName} !
                                 </Link>
                             </li>
                             <li className="nav-item">
@@ -84,7 +84,7 @@ export default function RouterNav() {
                         <Route exact path={["/", "/home"]} component={Frogs} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
-                        <Route exact path={["/", "/frogs"]} component={CreateFrog} />
+                        <Route exact path={["/", "/frogs"]} component={CreateFrog} /> 
                         <Route path="/user" component={Users} />
                     </Switch>
                 </div>

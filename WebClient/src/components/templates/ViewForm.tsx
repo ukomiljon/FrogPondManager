@@ -2,25 +2,28 @@
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-
-
+import { BsPencil, BsX } from "react-icons/bs";
+ 
 export default function ViewForm(props: any) {
 
-    const { fieldNames, remove, update, get, getAll, data } = props
+    const { fieldNames, remove, update, get, getAll, data, redirect } = props
     const dispatch = useDispatch()
     const { account } = useSelector((state: any) => state.account?.account);
     const history = useHistory();
 
-    const deleteRow = (id: any) => {
-        remove(id)
+    const deleteHandler = (id: any) => {
+        if(window.confirm("Are you sure to delete it?"))
+        {
+            if (remove) dispatch(remove(id))
+        }
     }
 
-    const editHandler = (schemaId: any) => {
-
+    const editHandler = (id: any) => {
+        //history.push("/frogs");
     }
 
     const createHandler = (id:any) => {
-        //history.push("/frogs"); 
+        history.push("/frogs");
     }
 
     return (
@@ -49,7 +52,7 @@ export default function ViewForm(props: any) {
 
                     {
                         data?.map((schema: any, index: number) =>
-                            <tr key={schema._id}>
+                            <tr key={schema.id}>
                                 <td>{index + 1}</td>
 
                                 {
@@ -60,10 +63,9 @@ export default function ViewForm(props: any) {
                                 }
 
                                 {
-                                    <td>
+                                    <td align="center" width="10%">
                                         {account && <>
-                                            <button className="btn btn-secondary btn-sm" onClick={(id: any) => editHandler(schema._id)} >  Change </button> &nbsp;
-                                            <button className="btn btn-danger btn-sm" type="submit" onClick={(id: any) => deleteRow(schema._id)}>  Delete </button>
+                                             <BsPencil onClick={(id: any) => editHandler(schema.id)}/> <BsX onClick={(id: any) => deleteHandler(schema.id)}/>                                            
                                         </>
                                         }
                                     </td>

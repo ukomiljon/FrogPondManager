@@ -56,7 +56,7 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
 
 
         [Authorize]
-        [HttpPut("{id:int}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<FrogResponse>> Update(string id, FrogUpdateRequest model)
         {
             var frog = await _frogService.Update(id, model);
@@ -65,7 +65,7 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
 
 
         [Authorize]
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             await _frogService.Delete(id);

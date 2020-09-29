@@ -25,7 +25,7 @@ namespace FrogsPond.Modules.FrogsContext.Data
 
         public async Task Delete(string id)
         {
-            await _frogs.DeleteOneAsync(doc => doc.Name == id);
+            await _frogs.DeleteOneAsync(doc => doc.Id == id);
         }
 
         public async Task<IEnumerable<Frog>> GetAll()

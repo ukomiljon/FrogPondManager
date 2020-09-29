@@ -75,7 +75,7 @@ namespace FrogsPond.Modules.AccountsContext.Controllers
         public async Task<IActionResult> VerifyEmail([FromQuery] VerifyEmailRequest model)
         {
             await _accountService.VerifyEmail(model.Token);
-            return Ok(new { message = "Verification successful, you can now login" });
+            return Ok(new { message = "Verification successful, you can now login" });//redirect to http://localhost:3000/login
         }
 
         [HttpPost("forgot-password")]

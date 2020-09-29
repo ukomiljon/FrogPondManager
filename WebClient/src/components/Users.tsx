@@ -34,7 +34,7 @@ export default function Accounts(props: any) {
                     <p>Users</p>
                     <ViewForm
                         fieldNames={fieldNames}
-                        remove={actionCreators.remove}
+                        remove={actionCreators.delete}
                         update={actionCreators.update}
                         get={actionCreators.getById}
                         getAll={actionCreators.getAll}
