@@ -17,10 +17,11 @@ export default function RouterNav() {
     const dispatch = useDispatch()
     const { account } = useSelector((state: any) => state.account?.account);
     const history = useHistory();
+ 
 
-    const logOut = (e: any) => {
+    const logOut = async(e: any) => {
         e.preventDefault();
-        dispatch(actionCreators.logout())  
+        await dispatch(actionCreators.logout())  
         //redirect()
     };
 
@@ -53,7 +54,7 @@ export default function RouterNav() {
                         <div className="navbar-nav ml-auto">
                             <li className="nav-item">
                                 <Link to={"/profile"} className="nav-link">
-                                   Hi, {account.firstName +' ' + account.lastName} !
+                                {account.role}: Hi,  {account.firstName +' ' + account.lastName} !
                                 </Link>
                             </li>
                             <li className="nav-item">

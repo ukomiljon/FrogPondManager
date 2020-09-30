@@ -2,8 +2,9 @@
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { BsPencil, BsX } from "react-icons/bs";
- 
+import { BsPencil, BsTrash } from "react-icons/bs";
+import { role } from '../../services/accounts.service';
+
 export default function ViewForm(props: any) {
 
     const { fieldNames, remove, update, get, getAll, data, redirect } = props
@@ -11,18 +12,17 @@ export default function ViewForm(props: any) {
     const { account } = useSelector((state: any) => state.account?.account);
     const history = useHistory();
 
-    const deleteHandler = (id: any) => {
-        if(window.confirm("Are you sure to delete it?"))
-        {
-            if (remove) dispatch(remove(id))
+    const deleteHandler = async (id: any) => {
+        if (window.confirm("Are you sure to delete it?")) {
+            if (remove) await dispatch(remove(id))
         }
     }
 
     const editHandler = (id: any) => {
-        //history.push("/frogs");
+        alert('Edit feature is not implemented yet!')
     }
 
-    const createHandler = (id:any) => {
+    const createHandler = (id: any) => {
         history.push("/frogs");
     }
 
@@ -59,13 +59,12 @@ export default function ViewForm(props: any) {
                                     fieldNames?.map((fieldName: any) =>
                                         <td>{schema[fieldName]}</td>
                                     )
-
                                 }
 
                                 {
                                     <td align="center" width="10%">
-                                        {account && <>
-                                             <BsPencil onClick={(id: any) => editHandler(schema.id)}/> <BsX onClick={(id: any) => deleteHandler(schema.id)}/>                                            
+                                        {(account?.role === role.admin || schema.userId === account?.id) && <>
+                                            <BsPencil onClick={(id: any) => editHandler(schema.id)} /> <BsTrash onClick={(id: any) => deleteHandler(schema.id)} />
                                         </>
                                         }
                                     </td>

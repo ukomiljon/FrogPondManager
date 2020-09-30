@@ -27,7 +27,9 @@ const slice = createSlice({
         addData: (state, action: PayloadAction<any>) => {
             state.frog.frogs = [...state.frog.frogs, action.payload];
         },
-
+        updateData: (state) => {
+            actionCreators.getAll()
+        },
     }
 });
 
@@ -35,90 +37,71 @@ const slice = createSlice({
 export const { reducer } = slice;
 
 // Define action creators.
-export const actionCreators = {
-    get: (id: string) => async (dispatch: Dispatch) => {
-        dispatch(slice.actions.setFetching(true));
-
-        const result = await frogsService.getById(id);
-
-        if (!result.hasErrors) {
-            dispatch(slice.actions.setData(result.payload));
-        }
-
-        dispatch(slice.actions.setFetching(false));
-
-        return result;
-    },
+export const actionCreators = { 
     getAll: () => async (dispatch: Dispatch) => {
-        dispatch(slice.actions.setFetching(true));
+        await dispatch(slice.actions.setFetching(true));
 
-        const result = await frogsService.getAll();
-
-        if (!result.hasErrors) {
-            dispatch(slice.actions.setData(result.payload));
+        const result = await frogsService.getAll(); 
+        console.log("getAll=",result)
+       
+        if (!result.hasErrors) { 
+            await dispatch(slice.actions.setData(result.payload));
         }
 
-        dispatch(slice.actions.setFetching(false));
-
-        return result;
-    },
-    getByUserId: (userId: any) => async (dispatch: Dispatch) => {
-        dispatch(slice.actions.setFetching(true));
-
-        const result = await frogsService.getByUserId(userId);
-
-        if (!result.hasErrors) {
-            dispatch(slice.actions.setData(result.payload));
-        }
-
-        dispatch(slice.actions.setFetching(false));
+        await dispatch(slice.actions.setFetching(false));
 
         return result;
     },
     create: (model: any) => async (dispatch: Dispatch) => {
-        dispatch(slice.actions.setFetching(true));
+        await dispatch(slice.actions.setFetching(true));
 
-        await frogsService.create(model);
-        var account = JSON.parse(localStorage.getItem('account')!)
-        const result = await frogsService.getByUserId(account.id);
-
-        if (!result.hasErrors) {
-            dispatch(slice.actions.setData(result.payload));
+        const result = await frogsService.create(model); 
+      
+        if (!result.hasErrors) {  
+            await dispatch(slice.actions.updateData());
         }
 
-        dispatch(slice.actions.setFetching(false));
+        await dispatch(slice.actions.setFetching(false));
 
         return result;
     },
     update: (model: any) => async (dispatch: Dispatch) => {
-        dispatch(slice.actions.setFetching(true));
+        await dispatch(slice.actions.setFetching(true));
 
-        await frogsService.update(model);
-        var account = JSON.parse(localStorage.getItem('account')!)
-        const result = await frogsService.getByUserId(account.id);
-
+        const result = await frogsService.update(model);
+        
         if (!result.hasErrors) {
-            dispatch(slice.actions.setData(result.payload));
+            await dispatch(slice.actions.updateData());
         }
 
-        dispatch(slice.actions.setFetching(false));
+        await dispatch(slice.actions.setFetching(false));
 
         return result;
     },
     delete: (id: any) => async (dispatch: Dispatch) => {
-        dispatch(slice.actions.setFetching(true));
+        await dispatch(slice.actions.setFetching(true));
 
-        await frogsService.remove(id);
-        var account = JSON.parse(localStorage.getItem('account')!)
-        const result = await frogsService.getByUserId(account.id);
-
-        if (!result.hasErrors) {
-            dispatch(slice.actions.setData(result.payload));
+        const result = await frogsService.remove(id); 
+        
+        if (!result.hasErrors) {  
+            await dispatch(slice.actions.updateData());
         }
 
-        dispatch(slice.actions.setFetching(false));
+        await dispatch(slice.actions.setFetching(false));
 
         return result;
-    }
+    },
+    // delete: (id: any) => async (dispatch: Dispatch) => {
+    //     await dispatch(slice.actions.setFetching(true)); 
+    //     const result = await frogsService.remove(id);
+    //     console.log("delete=",result)
+    //     if (!result.hasErrors) {
+    //         await dispatch(slice.actions.updateData());
+    //     }
+
+    //     await dispatch(slice.actions.setFetching(false));
+
+    //     return result;
+    // } 
 };
 

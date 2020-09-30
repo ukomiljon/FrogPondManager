@@ -13,14 +13,7 @@ const Frogs = () => {
     const history = useHistory();
 
     useEffect(() => {
-
-        if (account?.account?.id) {
-            if (account.account.role === role.admin)
-                dispatch(actionCreators.getAll())
-            else dispatch(actionCreators.getByUserId(account.account.id))
-        }
-        else
-            dispatch(actionCreators.getAll())
+        dispatch(actionCreators.getAll())
     }, [])
 
     const redirect = () => {
@@ -30,7 +23,7 @@ const Frogs = () => {
     const fieldNames = [
         "name",
         "type",
-        "color",
+        "color", 
     ]
 
     return (

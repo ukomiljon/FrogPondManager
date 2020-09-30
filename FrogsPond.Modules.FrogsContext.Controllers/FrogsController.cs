@@ -27,37 +27,10 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FrogResponse>>> GetAll()
-        {
-            var account = (Account)Request.HttpContext.Items["Account"];
-            if (account == null || account.Role == Role.Admin)
-            {
-                var frogs = await _frogService.GetAll();
-                return Ok(frogs);
-            }
-
-            return Ok(null);
-        }
-
-
-        [HttpGet("{id}/{userId}")]
-        public async Task<ActionResult<FrogResponse>> GetById(string id, string userId)
-        {
-            var frog = await _frogService.GetById(id);
-            return Ok(frog);
-        }
-
-        [Authorize]
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<IEnumerable<FrogResponse>>> GetByUserId(string userId)
-        {
-            var account = (Account)Request.HttpContext.Items["Account"];
-            var frogs = await _frogService.GetAllByUserId(userId);
-
-            if (account.Role == Role.Admin) return Ok(frogs);
-            frogs = frogs.Where(item => item.UserId == account.Id);
-
-            return Ok(frogs);
-        }
+        { 
+            var frogs = await _frogService.GetAll();
+            return Ok(frogs); 
+        } 
 
 
         [Authorize]
