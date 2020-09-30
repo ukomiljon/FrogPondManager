@@ -2,9 +2,12 @@
 using FrogsPond.Modules.AccountsContext.Domain.UseCases;
 using FrogsPond.Modules.FrogsContext.Domain.DTOs;
 using FrogsPond.Modules.FrogsContext.Domain.Services;
+using FrogsPond.Modules.AccountsContext.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FrogsPond.Modules.FrogsContext.Domain.Entities;
+using System.Linq;
 
 namespace FrogsPond.Modules.FrogsContext.Controllers
 {
@@ -25,8 +28,14 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FrogResponse>>> GetAll()
         {
-            var frogs = await _frogService.GetAll();
-            return Ok(frogs);
+            var account = (Account)Request.HttpContext.Items["Account"];
+            if (account == null || account.Role == Role.Admin)
+            {
+                var frogs = await _frogService.GetAll();
+                return Ok(frogs);
+            }
+
+            return Ok(null);
         }
 
 
@@ -37,11 +46,16 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
             return Ok(frog);
         }
 
-
+        [Authorize]
         [HttpGet("{userId}")]
         public async Task<ActionResult<IEnumerable<FrogResponse>>> GetByUserId(string userId)
         {
+            var account = (Account)Request.HttpContext.Items["Account"];
             var frogs = await _frogService.GetAllByUserId(userId);
+
+            if (account.Role == Role.Admin) return Ok(frogs);
+            frogs = frogs.Where(item => item.UserId == account.Id);
+
             return Ok(frogs);
         }
 
@@ -50,7 +64,10 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
         [HttpPost]
         public async Task<ActionResult<FrogResponse>> Create(FrogCreateRequest model)
         {
-            var frog = await _frogService.Create(model);
+            var account = (Account)Request.HttpContext.Items["Account"];
+            var frogModel = _mapper.Map<Frog>(model);
+            frogModel.UserId = account.Id;
+            var frog = await _frogService.Create(frogModel);
             return Ok(frog);
         }
 
@@ -59,8 +76,15 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<FrogResponse>> Update(string id, FrogUpdateRequest model)
         {
-            var frog = await _frogService.Update(id, model);
-            return Ok(frog);
+            var account = (Account)Request.HttpContext.Items["Account"];
+            var foundFrog = await _frogService.GetById(id);
+            if (foundFrog.UserId == account.Id || account.Role == Role.Admin)
+            {
+                var frog = await _frogService.Update(id, model);
+                return Ok(frog);
+            }
+
+            return Ok(new { message = "you are not authorized to update this frog" });
         }
 
 
@@ -68,8 +92,15 @@ namespace FrogsPond.Modules.FrogsContext.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            await _frogService.Delete(id);
-            return Ok(new { message = "Frog deleted successfully" });
+            var account = (Account)Request.HttpContext.Items["Account"];
+            var foundFrog = await _frogService.GetById(id);
+            if (foundFrog.UserId == account.Id || account.Role == Role.Admin)
+            {
+                await _frogService.Delete(id);
+                return Ok(new { message = "Frog deleted successfully" });
+            }
+
+            return Ok(new { message = "you are not authorized to delete this frog" });
         }
     }
 }

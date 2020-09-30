@@ -13,7 +13,7 @@ const getAll = () => {
 };
 
 const getByUserId = (userId: any) => {
-    return axios.get(API_URL + `/${userId}`)
+    return axios.get(API_URL + `${userId}`, { headers: authHeader() })
     .then((response: any) => {
       return { payload: response.data, hasErrors: false }
     }).catch((error: any) => {
@@ -22,7 +22,7 @@ const getByUserId = (userId: any) => {
 };
 
 const getById = (id: any) => {
-    return axios.get(API_URL + `/${id}`)
+    return axios.get(API_URL + `${id}`)
     .then((response: any) => {
         return { payload: response.data, hasErrors: false }
       }).catch((error: any) => {

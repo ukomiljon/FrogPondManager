@@ -20,9 +20,8 @@ namespace FrogsPond.Modules.FrogsContext.Domain.Services.Implementations
             _mapper = mapper;
         }
 
-        public async Task<FrogResponse> Create(FrogCreateRequest model)
-        {
-            var frog = _mapper.Map<Frog>(model);
+        public async Task<FrogResponse> Create(Frog frog)
+        {             
             frog.Created = DateTime.UtcNow;
 
             await _frogRepository.Add(frog);

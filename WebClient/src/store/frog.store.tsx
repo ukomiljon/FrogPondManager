@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
 import frogsService from '../services/frogs.service';
-
+ 
 export interface IFrogStoreState {
     frog: {
         isFetching: boolean;
@@ -62,12 +62,25 @@ export const actionCreators = {
 
         return result;
     },
+    getByUserId: (userId: any) => async (dispatch: Dispatch) => {
+        dispatch(slice.actions.setFetching(true));
+
+        const result = await frogsService.getByUserId(userId);
+
+        if (!result.hasErrors) {
+            dispatch(slice.actions.setData(result.payload));
+        }
+
+        dispatch(slice.actions.setFetching(false));
+
+        return result;
+    },
     create: (model: any) => async (dispatch: Dispatch) => {
         dispatch(slice.actions.setFetching(true));
 
         await frogsService.create(model);
-
-        const result = await frogsService.getAll();
+        var account = JSON.parse(localStorage.getItem('account')!)
+        const result = await frogsService.getByUserId(account.id);
 
         if (!result.hasErrors) {
             dispatch(slice.actions.setData(result.payload));
@@ -81,7 +94,8 @@ export const actionCreators = {
         dispatch(slice.actions.setFetching(true));
 
         await frogsService.update(model);
-        const result = await frogsService.getAll();
+        var account = JSON.parse(localStorage.getItem('account')!)
+        const result = await frogsService.getByUserId(account.id);
 
         if (!result.hasErrors) {
             dispatch(slice.actions.setData(result.payload));
@@ -95,7 +109,8 @@ export const actionCreators = {
         dispatch(slice.actions.setFetching(true));
 
         await frogsService.remove(id);
-        const result = await frogsService.getAll();
+        var account = JSON.parse(localStorage.getItem('account')!)
+        const result = await frogsService.getByUserId(account.id);
 
         if (!result.hasErrors) {
             dispatch(slice.actions.setData(result.payload));

@@ -3,15 +3,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import ViewForm from "./templates/ViewForm";
 import { actionCreators } from "../store/frog.store";
+import { role } from "../services/accounts.service";
 
 
 const Frogs = () => {
     const dispatch = useDispatch()
     const { frog } = useSelector((state: any) => state.frog);
+    const { account } = useSelector((state: any) => state.account);
     const history = useHistory();
 
     useEffect(() => {
-        dispatch(actionCreators.getAll())          
+
+        if (account?.account?.id) {
+            if (account.account.role === role.admin)
+                dispatch(actionCreators.getAll())
+            else dispatch(actionCreators.getByUserId(account.account.id))
+        }
+        else
+            dispatch(actionCreators.getAll())
     }, [])
 
     const redirect = () => {
@@ -21,7 +30,7 @@ const Frogs = () => {
     const fieldNames = [
         "name",
         "type",
-        "color",     
+        "color",
     ]
 
     return (
@@ -30,7 +39,7 @@ const Frogs = () => {
             <ViewForm
                 fieldNames={fieldNames}
                 remove={actionCreators.delete}
-                update={actionCreators.update} 
+                update={actionCreators.update}
                 getAll={actionCreators.getAll}
                 data={frog?.frogs}
             />
