@@ -31,7 +31,7 @@ const Frogs = () => {
             <p>List of Frogs</p>
             <ViewForm
                 fieldNames={fieldNames}
-                remove={actionCreators.delete}
+                remove={actionCreators.remove}
                 update={actionCreators.update}
                 getAll={actionCreators.getAll}
                 data={frog?.frogs}

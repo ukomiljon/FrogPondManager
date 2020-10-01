@@ -28,7 +28,7 @@ const slice = createSlice({
             state.frog.frogs = [...state.frog.frogs, action.payload];
         },
         updateData: (state) => {
-            actionCreators.getAll()
+           //actionCreators.getAll()
         },
     }
 });
@@ -56,7 +56,7 @@ export const actionCreators = {
         await dispatch(slice.actions.setFetching(true));
 
         const result = await frogsService.create(model); 
-      
+        
         if (!result.hasErrors) {  
             await dispatch(slice.actions.updateData());
         }
@@ -78,30 +78,19 @@ export const actionCreators = {
 
         return result;
     },
-    delete: (id: any) => async (dispatch: Dispatch) => {
+    remove: (id: any) => async (dispatch: Dispatch) => {
         await dispatch(slice.actions.setFetching(true));
 
         const result = await frogsService.remove(id); 
         
         if (!result.hasErrors) {  
+            console.log(result)
             await dispatch(slice.actions.updateData());
         }
 
         await dispatch(slice.actions.setFetching(false));
 
         return result;
-    },
-    // delete: (id: any) => async (dispatch: Dispatch) => {
-    //     await dispatch(slice.actions.setFetching(true)); 
-    //     const result = await frogsService.remove(id);
-    //     console.log("delete=",result)
-    //     if (!result.hasErrors) {
-    //         await dispatch(slice.actions.updateData());
-    //     }
-
-    //     await dispatch(slice.actions.setFetching(false));
-
-    //     return result;
-    // } 
+    }, 
 };
 

@@ -14,7 +14,10 @@ export default function ViewForm(props: any) {
 
     const deleteHandler = async (id: any) => {
         if (window.confirm("Are you sure to delete it?")) {
-            if (remove) await dispatch(remove(id))
+            if (remove) {
+                await dispatch(remove(id))
+                await dispatch(getAll())               
+            }
         }
     }
 
